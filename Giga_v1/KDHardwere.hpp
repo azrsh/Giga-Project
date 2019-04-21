@@ -1,0 +1,61 @@
+#ifndef KD_HARDWERE_h
+#define KD_HARDWERE_h
+
+#include <Arduino.h>
+
+//ハードウェア依存クラス
+
+class KDHardwere
+{
+  public:
+    static constexpr uint8_t KickerPin = 50;
+
+    static constexpr uint8_t RightMotorDirectionPin = 24;
+    static constexpr uint8_t LeftMotorDirectionPin = 25;
+    static constexpr uint8_t RearMotorDirectionPin = 26;
+
+    static constexpr uint8_t RightMotorPwmPin = 20;
+    static constexpr uint8_t LeftMotorPwmPin = 21;
+    static constexpr uint8_t RearMotorPwmPin = 22;
+
+    static constexpr uint8_t FrontLineSensorPin = 36;
+    static constexpr uint8_t RearLineSensorPin = 37;
+    static constexpr uint8_t RightLineSensorPin = 38;
+    static constexpr uint8_t LeftLineSensorPin = 39;
+
+    static constexpr uint8_t FrontUSSensorPin = A2;
+    static constexpr uint8_t RearUSSensorPin = A3;
+    static constexpr uint8_t RightUSSensorPin = A4;
+    static constexpr uint8_t LeftUSSensorPin = A5;
+
+    static constexpr uint8_t Switch1Pin = A14;
+    static constexpr uint8_t Switch2Pin = A15;
+
+    static constexpr uint8_t CatchSensorPin = A16;
+
+    static constexpr uint8_t LineThreshold = A21; //DAC0
+    static constexpr uint8_t LineAnalogPin = A22;
+    static constexpr uint8_t RightMotorElectricCurrentMonitoringPin = A0;
+    static constexpr uint8_t LeftMotorElectricCurrentMonitoringPin = A1;
+    static constexpr uint8_t RearMotorElectricCurrentMonitoringPin = A10;
+    static constexpr uint8_t PowerVoltageMonitoringPin = A23;
+
+    static constexpr uint8_t SpeakerPin = 2;
+
+    /*
+    Serial1 ESP32
+    Serail2 UI
+    Serial3 RasberryPi
+    Serial4 Ball
+    Serial5 MPU6050
+    rx : 3, tx : 4 EmptyMicon 
+    */
+
+    static void Initialize(void);
+
+  private:
+    //pinModeの初期化用関数
+    static void SetupDigitalPins(void);
+};
+
+#endif
