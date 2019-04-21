@@ -26,6 +26,7 @@ LEDAnimation ledAnimation = LEDAnimation(colorPinMap, ledPinMap);
 
 void setup()
 {
+    Serial.begin(115200);
     pinMode(CenterSwitchPin, INPUT);
     pinMode(SideSwitchPin, INPUT);
 }
@@ -34,8 +35,22 @@ void loop()
 {
     bool centerSwitch = digitalReadFast(CenterSwitchPin);
     bool sideSwitch = digitalReadFast(SideSwitchPin);
+    printData(centerSwitch, sideSwitch);
+    delay(10);
+}
+
+void printData(bool centerSwitch, bool sideSwitch)
+{
+    Serial.print("center : ");
+    Serial.write(centerSwitch);
+    Serial.print("    side : ");
+    Serial.write(sideSwitch);
+    Serial.println();
+}
+
+void writeData(bool centerSwitch, bool sideSwitch)
+{
     Serial.print('S');
     Serial.write(centerSwitch);
     Serial.write(sideSwitch);
-    delay(10);
 }
