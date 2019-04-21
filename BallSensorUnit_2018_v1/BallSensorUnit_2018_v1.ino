@@ -1,14 +1,10 @@
 #include <math.h>
 #include <digitalWriteFast.h>
-#include "KDMovingAverageFilter.hpp"
 #include "IRSensorCtrl.hpp"
 
 constexpr unsigned long Baud = 115200;
 
 IRSensorCtrl irSensorCtrl = IRSensorCtrl();
-
-KDMovingAverageFilter<int> radiusFilter = KDMovingAverageFilter<int>();
-KDMovingAverageFilter<int> thetaFilter = KDMovingAverageFilter<int>();
 
 float pulseWidth[IRSensorCtrl::NumberOfBallSensors];
 
