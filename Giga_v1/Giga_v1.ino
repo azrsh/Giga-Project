@@ -10,6 +10,7 @@
 #include "KDLineSensors.hpp"
 #include "KDGyroSensor.hpp"
 #include "KDCatchSensor.hpp"
+#include "KDUIUnitCommunication.hpp"
 #include "KDMath.hpp" //数学系ライブラリ、未実装機能多数
 #include "KDPIDControl.hpp"
 #include "KDThreeMotors.hpp" //テスト用に読み込んでるだけ
@@ -25,6 +26,8 @@ KDKicker kicker = KDKicker();
 KDLineSensors lineSensors = KDLineSensors();
 KDGyroSensor gyroSensor = KDGyroSensor(&Serial5);
 KDCatchSensor catchSensor = KDCatchSensor();
+
+KDUIUnitCommunication uiUnitCommunication = KDUIUnitCommunication(&Serial2);
 
 //方位補正用のPID制御インスタンスだが、P制御しか実装してない
 //KP=0.071~0.072の範囲
@@ -60,6 +63,7 @@ void setup()
 
 void loop()
 {
+    KDDebugUtility::printValueWithTag("switch", uiUnitCommunication.read());
     /*//スイッチがオフならこのif分以降は実行されない
     bool switch1State = digitalReadFast(KDHardwere::Switch1Pin);
     if (!switch1State)
