@@ -4,8 +4,6 @@
 #include "KDSharedObjects.hpp"
 #include "KDDebugUtility.hpp"
 
-//_serialInstanceを元に戻すときはSerial1に置き換えること
-
 void KDUIUnitCommunication::init()
 {
     _serialInstance->begin(11520);
@@ -28,7 +26,7 @@ int KDUIUnitCommunication::read()
         {
             const byte centerSwitch = _serialInstance->read();
             const byte sideSwitch = _serialInstance->read();
-            value = centerSwitch;
+            value = centerSwitch + (sideSwitch << 1);
             Serial.println("recieved");
         }
     }
@@ -37,7 +35,8 @@ int KDUIUnitCommunication::read()
 
 void KDUIUnitCommunication::printValue()
 {
-    int gyroValue = read();
-    KDDebugUtility::printValueWithTag("Gyro", gyroValue);
+    int switchState = read();
+    KDDebugUtility::printValueWithTag("switch1", switchState - (switchState >> 1 << 1));
+    KDDebugUtility::printValueWithTag("switch2", switchState >> 1);
     KDDebugUtility::println();
 }
