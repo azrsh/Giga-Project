@@ -126,7 +126,6 @@ void loop()
     KDDebugUtility::printValueWithTag("left", analogRead(KDHardwere::RightMotorElectricCurrentMonitoringPin));
     KDDebugUtility::printValueWithTag("rear", analogRead(KDHardwere::RightMotorElectricCurrentMonitoringPin));
     KDDebugUtility::println();
-    //2,3,4,5,6,7,8,9,10,A0,A1,A2
 
     //簡易モータテストコード
     //KDMoveCtrl::moveByLocalDegreeAndPower(0, DefaultPower, 0);
