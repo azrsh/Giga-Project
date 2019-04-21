@@ -11,8 +11,6 @@ typedef struct
 class KDMoveCtrl
 {
   public:
-    static char lockX;
-    static char lockY;
     static VectorXY_t baseVector;
     static void moveByLocalVector2(int x, int y, int w);
     static void moveByLocalVector2(int x, int y, int w, bool isLock);
@@ -36,6 +34,8 @@ class KDMoveCtrl
     };
 
   private:
+    static char lockX;
+    static char lockY;
     static int getLockedDegree(int degree);
 };
 
