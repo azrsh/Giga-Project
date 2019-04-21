@@ -2,6 +2,10 @@
 #include <digitalWriteFast.h>
 #include "IRSensorCtrl.hpp"
 
+constexpr uint8_t IRSensorCtrl::BallSensorPins[NumberOfBallSensors];
+constexpr float IRSensorCtrl::UnitVectorX[NumberOfBallSensors];
+constexpr float IRSensorCtrl::UnitVectorY[NumberOfBallSensors];
+
 //センサの状態を格納する型
 //すべてのセンサのパルス幅を取得
 sensorInfo_t IRSensorCtrl::GetAllSensorPulseWidth(float pulseWidth[NumberOfBallSensors])
@@ -59,8 +63,8 @@ vectorXY_t IRSensorCtrl::CaliculateVectorXYFromPulseWidth(float *pulseWidth) con
     float pulseWidthSum = 0;
     for (int i = 0; i < NumberOfBallSensors; i++)
     {
-        result.x += pulseWidth[i] * GetUnitVectorX(i);
-        result.y += pulseWidth[i] * GetUnitVectorY(i);
+        result.x += pulseWidth[i] * UnitVectorX[i];
+        result.y += pulseWidth[i] * UnitVectorY[i];
         pulseWidthSum += pulseWidth[i];
     }
 
