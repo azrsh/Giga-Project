@@ -35,7 +35,7 @@ void loop()
 {
     bool centerSwitch = digitalReadFast(CenterSwitchPin);
     bool sideSwitch = digitalReadFast(SideSwitchPin);
-    printData(centerSwitch, sideSwitch);
+    writeData(centerSwitch, sideSwitch);
     delay(10);
 }
 
