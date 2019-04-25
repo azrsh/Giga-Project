@@ -18,10 +18,10 @@ class KDConstexprTest
         Serial.println();
         delay(10);
     }
-    constexpr int8_t Test() { return _pin; }
+    constexpr int8_t Test() const { return _pin; }
 
   private:
-    uint8_t _pin;
+    const uint8_t _pin;
 };
 
 #endif
