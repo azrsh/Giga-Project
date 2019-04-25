@@ -98,8 +98,8 @@ void GryoStart()
 
 void setup()
 {
-    //pinMode(10, OUTPUT);
-    //digitalWrite(10, HIGH);
+    pinMode(10, OUTPUT);
+    digitalWrite(10, HIGH);
     Serial.begin(9600);
     GryoStart();
     Serial.println("SetUp Finished.");
