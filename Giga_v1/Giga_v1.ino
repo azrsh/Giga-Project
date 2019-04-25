@@ -16,6 +16,9 @@
 #include "KDThreeMotors.hpp" //テスト用に読み込んでるだけ
 #include "KDDebugUtility.hpp"
 #include "KDInterThreadData.hpp"
+#include "KDSwitchObserver.hpp"
+
+#include "KDConstexprTest.hpp"
 
 static constexpr int16_t DefaultPower = 144;
 
@@ -28,15 +31,16 @@ KDGyroSensor gyroSensor = KDGyroSensor(&Serial5);
 KDCatchSensor catchSensor = KDCatchSensor();
 
 KDUIUnitCommunication uiUnitCommunication = KDUIUnitCommunication(&Serial2);
+KDSwitchObserver switchObserver = KDSwitchObserver();
 
 //方位補正用のPID制御インスタンスだが、P制御しか実装してない
 //KP=0.071~0.072の範囲
 //KI=KP/DELTA_TIME
 //KD＝KP*DELTA_TIME
 //static constexpr float GyroPidKP = 0.072;
-static constexpr float GyroPidKP = 0.071;
-static constexpr float GyroPidKI = GyroPidKP / 14.5;
-static constexpr float GyroPidKD = GyroPidKP * 14.5;
+static constexpr float GyroPidKP = -0.071;
+static constexpr float GyroPidKI = -GyroPidKP / 14.5;
+static constexpr float GyroPidKD = -GyroPidKP * 14.5;
 KDPIDControl pidControl = KDPIDControl(GyroPidKP, GyroPidKI, GyroPidKD, -7.0f, 7.0f);
 
 //スレッド間のデータ共有用インスタンス
@@ -63,9 +67,19 @@ void setup()
 
 void loop()
 {
-    KDDebugUtility::printValueWithTag("switch", uiUnitCommunication.read());
+    //constexpr KDConstexprTest constexprTest = KDConstexprTest(10);
+    //static_assert(constexprTest.Test() == 10, "constexpr error");
+    //int i = 0;
+    //i++;
+    //digitalReadFast(i);
+    {
+        bool switch1State = digitalReadFast(KDHardwere::Switch1Pin);
+        bool switch2State = digitalReadFast(KDHardwere::Switch2Pin);
+        KDDebugUtility::printValueWithTag("switch1", switch1State);
+        KDDebugUtility::printValueWithTag("switch2", switch2State);
+    }
+    //KDDebugUtility::printValueWithTag("switch", uiUnitCommunication.read());
     /*//スイッチがオフならこのif分以降は実行されない
-    bool switch1State = digitalReadFast(KDHardwere::Switch1Pin);
     if (!switch1State)
     {
         KDMoveCtrl::moveByLocalDegreeAndPower(0, 0, 0);
@@ -87,10 +101,10 @@ void loop()
 
     //------------テスト用コード------------
     //IRSenosr用テストコード
-    //irSensors.printValue();
+    irSensors.printValue();
 
     //GyroSensorのテスト用コード
-    //Serial.println(gyroSensor.read());
+    //gyroSensor.printValue();
 
     //UltraSonicSensorのテスト用コード
     //usSensors.printValue();
@@ -121,11 +135,11 @@ void loop()
     delay(1000);
     KDThreeMotors::SetMotorPower(0, 0, 128);
     delay(1000);*/
-    KDThreeMotors::SetMotorPower(256, 256, 256);
-    KDDebugUtility::printValueWithTag("right", analogRead(KDHardwere::RightMotorElectricCurrentMonitoringPin));
+    //KDThreeMotors::SetMotorPower(256, 256, 256);
+    /*KDDebugUtility::printValueWithTag("right", analogRead(KDHardwere::RightMotorElectricCurrentMonitoringPin));
     KDDebugUtility::printValueWithTag("left", analogRead(KDHardwere::RightMotorElectricCurrentMonitoringPin));
     KDDebugUtility::printValueWithTag("rear", analogRead(KDHardwere::RightMotorElectricCurrentMonitoringPin));
-    KDDebugUtility::println();
+    KDDebugUtility::println();*/
 
     //簡易モータテストコード
     //KDMoveCtrl::moveByLocalDegreeAndPower(0, DefaultPower, 0);
@@ -140,8 +154,7 @@ void loop()
 
     //センサから数値を取得-----------------------------
     //機体の角度を取得
-    int bodyDirection = 0;
-    //gyroSensor.read();
+    int bodyDirection = gyroSensor.read();
     if (bodyDirection > 180) //これとか入れる
         bodyDirection -= 360;
 
@@ -166,10 +179,10 @@ void loop()
     bool isCatching = analogRead(KDHardwere::CatchSensorPin) > 300;
     //----------------------------------------------
 
-    int targetAttitude = 0;   //目標の姿勢
-    int targetDegrees = 0;    //目標の方向
-    int power = DefaultPower; //defaultPower
-    int angularVelocity = 0;  //出力する角速度
+    int targetAttitude = 0;  //目標の姿勢
+    int targetDegrees = 0;   //目標の方向
+    int power = 0;           //DefaultPower; //defaultPower
+    int angularVelocity = 0; //出力する角速度
 
     static unsigned long previousMillis = 0;
     unsigned long deltaMillis = millis() - previousMillis;
@@ -218,7 +231,6 @@ void loop()
             bool isBallOnBack = absBallDegree >= 135;
             KDDebugUtility::printValueWithTag("near", isNear);
             KDDebugUtility::printValueWithTag("midnear", ballLocalVector.distance);
-            KDDebugUtility::println();
             if (isUseBaseVector)
             {
                 if (isNear && isBallOnSideFront)
@@ -265,6 +277,9 @@ void loop()
     angularVelocity = getAngularVelocity(bodyDirection, targetAttitude);
 
     lockMovementByLineVector();
+
+    KDDebugUtility::printValueWithTag("angularVelocity", angularVelocity);
+    KDDebugUtility::println();
 
     //モータに出力
     KDMoveCtrl::moveByLocalDegreeAndPower(targetDegrees, power, angularVelocity, isUseBaseVector);
