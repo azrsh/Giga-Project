@@ -18,10 +18,10 @@ class KDHardwere
     static constexpr uint8_t LeftMotorPwmPin = 22;
     static constexpr uint8_t RearMotorPwmPin = 21;
 
-    static constexpr uint8_t FrontLineSensorPin = 36;
-    static constexpr uint8_t RearLineSensorPin = 37;
+    static constexpr uint8_t FrontLineSensorPin = 39;
+    static constexpr uint8_t RearLineSensorPin = 36;
     static constexpr uint8_t RightLineSensorPin = 38;
-    static constexpr uint8_t LeftLineSensorPin = 39;
+    static constexpr uint8_t LeftLineSensorPin = 37;
 
     static constexpr uint8_t FrontUSSensorPin = A2;
     static constexpr uint8_t RearUSSensorPin = A3;
