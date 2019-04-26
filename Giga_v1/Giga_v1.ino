@@ -20,7 +20,7 @@
 
 #include "KDConstexprTest.hpp"
 
-static constexpr int16_t DefaultPower = 144;
+static constexpr int16_t DefaultPower = 186;
 
 //センサ制御クラスのインスタンス
 KDIRSensor irSensors = KDIRSensor(&Serial4);
@@ -60,6 +60,9 @@ void setup()
     kicker.init();
     irSensors.init();
 
+    pinMode(KDHardwere::LEDPin, OUTPUT);
+    digitalWriteFast(KDHardwere::LEDPin, HIGH);
+
     //ライン処理のためのタイマ割り込みを設定して開始
     //FlexiTimer2::set(1, 1.0 / 7500, lineProcess1);
     //FlexiTimer2::start();
@@ -69,18 +72,10 @@ void loop()
 {
     //constexpr KDConstexprTest constexprTest = KDConstexprTest(10);
     //static_assert(constexprTest.Test() == 10, "constexpr error");
-    //int i = 0;
-    //i++;
-    //digitalReadFast(i);
-    {
-        bool switch1State = digitalReadFast(KDHardwere::Switch1Pin);
-        bool switch2State = digitalReadFast(KDHardwere::Switch2Pin);
-        KDDebugUtility::printValueWithTag("switch1", switch1State);
-        KDDebugUtility::printValueWithTag("switch2", switch2State);
-    }
+    //switchObserver.printValue();
     //KDDebugUtility::printValueWithTag("switch", uiUnitCommunication.read());
-    /*//スイッチがオフならこのif分以降は実行されない
-    if (!switch1State)
+    //スイッチがオフならこのif分以降は実行されない
+    if (!switchObserver.readMainSwitch())
     {
         KDMoveCtrl::moveByLocalDegreeAndPower(0, 0, 0);
         delay(10);
@@ -90,18 +85,17 @@ void loop()
     //スタートダッシュスイッチ
     if (!isStarted)
     {
-        bool switch2State = digitalReadFast(KDHardwere::Switch2Pin);
-        if (!switch2State)
+        if (switchObserver.readDashSwitch())
         {
             isStarted = true;
             //KDMoveCtrl::moveByLocalDegreeAndPower(0, DefaultPower, 0);
             delay(10);
         }
-    }*/
+    }
 
     //------------テスト用コード------------
     //IRSenosr用テストコード
-    irSensors.printValue();
+    //irSensors.printValue();
 
     //GyroSensorのテスト用コード
     //gyroSensor.printValue();
@@ -110,7 +104,7 @@ void loop()
     //usSensors.printValue();
 
     //LineSensorのテスト用コード
-    //lineSensors.printValue();
+    lineSensors.printValue();
 
     //LineProcess()
     //delay(10);
@@ -179,10 +173,10 @@ void loop()
     bool isCatching = analogRead(KDHardwere::CatchSensorPin) > 300;
     //----------------------------------------------
 
-    int targetAttitude = 0;  //目標の姿勢
-    int targetDegrees = 0;   //目標の方向
-    int power = 0;           //DefaultPower; //defaultPower
-    int angularVelocity = 0; //出力する角速度
+    int targetAttitude = 0;   //目標の姿勢
+    int targetDegrees = 0;    //目標の方向
+    int power = DefaultPower; //defaultPower
+    int angularVelocity = 0;  //出力する角速度
 
     static unsigned long previousMillis = 0;
     unsigned long deltaMillis = millis() - previousMillis;
@@ -224,7 +218,7 @@ void loop()
         else if (ballLocalVector.distance < 400)
         {
             int absBallDegree = abs(ballDegrees);
-            bool isNear = ballLocalVector.distance < 40;
+            bool isNear = ballLocalVector.distance < 30;
             bool isMiddleNear = ballLocalVector.distance < 50;
             bool isBallOnSideFront = absBallDegree >= 35 && absBallDegree < 90;
             bool isBallOnSideBack = absBallDegree >= 90 && absBallDegree < 135;
@@ -251,13 +245,13 @@ void loop()
                 if (isNear && isBallOnSideFront)
                     targetDegrees = 180;
                 else if (isNear)
-                    targetDegrees = ballDegrees * 3;
+                    targetDegrees = ballDegrees * 3.5;
                 else if (isMiddleNear && isBallOnSideFront)
-                    targetDegrees = ballDegrees * 1.8;
+                    targetDegrees = ballDegrees * 2;
                 else if (isMiddleNear && isBallOnSideBack)
-                    targetDegrees = ballDegrees * 1.9;
+                    targetDegrees = ballDegrees * 2;
                 else if (isBallOnBack)
-                    targetDegrees = ballDegrees * 1.5;
+                    targetDegrees = ballDegrees * 1.7;
                 else
                     targetDegrees = ballDegrees * 1.3;
             }
@@ -406,9 +400,10 @@ void lineProcess2()
     reactedLineDirecitionVector = {0, 0};
 }
 
-volatile void waitMilliSeconds(unsigned long waitTime)
+void setLineThreshold()
 {
-    volatile unsigned long waitStartMillis = millis();
-    while (millis() - waitStartMillis > waitTime)
-        ;
+    int whiteLine = analogRead(KDHardwere::LineAnalogPin);
+    int greenLine = analogRead(KDHardwere::LineAnalogPin);
+    int lineThreshold = round(greenLine * 0.7 + whiteLine * 0.3);
+    analogWrite(KDHardwere::LineThreshold, lineThreshold);
 }
