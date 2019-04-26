@@ -104,7 +104,10 @@ void loop()
     //usSensors.printValue();
 
     //LineSensorのテスト用コード
-    lineSensors.printValue();
+    /*Serial.print(analogRead(KDHardwere::LineAnalogPin));
+    Serial.print("    ");
+    analogWrite(KDHardwere::LineThreshold, 256);*/
+    //lineSensors.printValue();
 
     //LineProcess()
     //delay(10);
@@ -138,8 +141,8 @@ void loop()
     //簡易モータテストコード
     //KDMoveCtrl::moveByLocalDegreeAndPower(0, DefaultPower, 0);
 
-    delay(10);
-    return;
+    //delay(10);
+    //return;
     //------------------------------------
 
     /*static unsigned long lastWaitMs = 0;
