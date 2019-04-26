@@ -26,7 +26,10 @@ bool KDSwitchObserver::readDashSwitch()
 {
     bool switch2State = digitalReadFast(KDHardwere::Switch2Pin);
     if (previousDashSwitch && !switch2State)
+    {
         dashSwitch = !dashSwitch;
+        //setLineThreshold
+    }
 
     previousDashSwitch = switch2State;
 
@@ -35,9 +38,13 @@ bool KDSwitchObserver::readDashSwitch()
 
 void KDSwitchObserver::printValue()
 {
+    bool switch1State = digitalReadFast(KDHardwere::Switch1Pin);
+    bool switch2State = digitalReadFast(KDHardwere::Switch2Pin);
+    KDDebugUtility::printValueWithTag("rawMainSwitch", switch1State);
+    KDDebugUtility::printValueWithTag("rawSubSwitch2", switch2State);
     bool mainSwitch = readMainSwitch();
     bool dashSwitch = readDashSwitch();
     KDDebugUtility::printValueWithTag("mainSwitch", mainSwitch);
-    KDDebugUtility::printValueWithTag("dashSwitch", dashSwitch);
+    KDDebugUtility::printValueWithTag("subSwitch", dashSwitch);
     KDDebugUtility::println();
 }
