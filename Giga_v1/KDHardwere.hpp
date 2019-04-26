@@ -11,12 +11,12 @@ class KDHardwere
     static constexpr uint8_t KickerPin = 50;
 
     static constexpr uint8_t RightMotorDirectionPin = 24;
-    static constexpr uint8_t LeftMotorDirectionPin = 25;
-    static constexpr uint8_t RearMotorDirectionPin = 26;
+    static constexpr uint8_t LeftMotorDirectionPin = 26;
+    static constexpr uint8_t RearMotorDirectionPin = 25;
 
     static constexpr uint8_t RightMotorPwmPin = 20;
-    static constexpr uint8_t LeftMotorPwmPin = 21;
-    static constexpr uint8_t RearMotorPwmPin = 22;
+    static constexpr uint8_t LeftMotorPwmPin = 22;
+    static constexpr uint8_t RearMotorPwmPin = 21;
 
     static constexpr uint8_t FrontLineSensorPin = 36;
     static constexpr uint8_t RearLineSensorPin = 37;
@@ -41,6 +41,8 @@ class KDHardwere
     static constexpr uint8_t PowerVoltageMonitoringPin = A23;
 
     static constexpr uint8_t SpeakerPin = 2;
+
+    static constexpr uint8_t LEDPin = 13;
 
     /*
     Serial1 ESP32
