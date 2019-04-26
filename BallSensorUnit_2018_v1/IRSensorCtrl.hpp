@@ -45,7 +45,7 @@ class IRSensorCtrl
   public:
     //---------ハード依存変数---------
     //IRセンサの数
-    static constexpr int8_t NumberOfBallSensors = 12;
+    static constexpr uint8_t NumberOfBallSensors = 12;
     //-------------------------------
 
     void SetupSensors()
@@ -54,11 +54,8 @@ class IRSensorCtrl
             pinMode(BallSensorPins[i], INPUT);
     }
 
-    bool GetSensorValue(const uint8_t index)
+    bool GetSensorValue(uint8_t index)
     {
-        //なぜかこれが許されるけど原因不明
-        //return digitalReadFast(BallSensorPins[index]);
-
         switch (index)
         {
         case 0:
@@ -106,7 +103,7 @@ class IRSensorCtrl
     //---------ハード依存変数---------
     //センサのピン番号
     static constexpr uint8_t BallSensorPins[NumberOfBallSensors] =
-        {2, 3, 4, 5, 6, 7, 8, 9, 10, A0, A1, A2};
+        {2, A2, A1, A0, 10, 9, 8, 7, 6, 5, 4, 3};
 
     //センサが向いている方向のsin,cos（正規化済みのセンサの方向ベクトル）,12個用
     static constexpr float UnitVectorX[NumberOfBallSensors] =

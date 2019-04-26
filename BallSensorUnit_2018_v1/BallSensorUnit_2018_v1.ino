@@ -48,8 +48,8 @@ void loop()
     deltaVectorXYInt.x = round(deltaVectorXY.x);
     deltaVectorXYInt.y = round(deltaVectorXY.y);
 
-    constexpr int ThetaOffset = 10;
-    vectorRTInt.theta -= ThetaOffset;
+    //constexpr int ThetaOffset = 0;
+    //vectorRTInt.theta -= ThetaOffset;
 
     // 10ms周期でシリアル通信
     if (millis() - time_ms > 10)
@@ -58,6 +58,9 @@ void loop()
 
         sendVectorRTIntBySerial(vectorRTInt, deltaVectorXYInt);
         //printVectorRTIntBySerial(vectorRTInt, deltaVectorXYInt);
+        //Serial.println((bool)digitalReadFast(10));
+        //Serial.println(pulseIn(10, LOW, 833));
+        //printRawData();
     }
 }
 
@@ -97,5 +100,15 @@ void printVectorRTIntBySerial(vectorRTInt_t vectorRT, vectorXYInt_t vectorXY)
     Serial.print(x);
     Serial.print("    y : ");
     Serial.print(y);
+    Serial.println();
+}
+
+void printRawData()
+{
+    for (int i = 0; i < IRSensorCtrl::NumberOfBallSensors; i++)
+    {
+        Serial.print(pulseWidth[i]);
+        Serial.print("    ");
+    }
     Serial.println();
 }

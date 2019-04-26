@@ -43,7 +43,7 @@ BallStatus_t *KDIRSensor::read()
             x = makeWord(xHigh, xLow);
             y = makeWord(yHigh, yLow);
 
-            bool isThetaTrue = theta > -190 && theta < 190;
+            bool isThetaTrue = theta >= -180 && theta <= 180;
             bool isRadiusTrue = radius >= 0 && radius < 100;
 
             if (isThetaTrue)
