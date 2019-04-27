@@ -73,7 +73,7 @@ void GryoStart()
     if (!mpu.testConnection())
     {
         Serial.println("MPU disconection");
-        digitalWrite(13, HIGH);
+        digitalWrite(10, HIGH);
         while (true)
         {
         }
@@ -81,7 +81,7 @@ void GryoStart()
     if (mpu.dmpInitialize() != 0)
     {
         Serial.println("MPU break");
-        digitalWrite(13, HIGH);
+        digitalWrite(10, HIGH);
         while (true)
         {
         }
@@ -99,7 +99,7 @@ void GryoStart()
 void setup()
 {
     pinMode(10, OUTPUT);
-    digitalWrite(10, HIGH);
+    digitalWrite(10, LOW);
     Serial.begin(9600);
     GryoStart();
     Serial.println("SetUp Finished.");
