@@ -10,6 +10,14 @@ class KDMath
     static constexpr float deg2Rad = 0.01745329251f;
     static constexpr float rad2Deg = 57.2957795131f;
 
+    static int sign(int value)
+    {
+        if (value == 0)
+            return 0;
+
+        return value / abs(value);
+    }
+
     /*//階乗
     static constexpr float PowConstexpr(double x, uint8_t y)
     {
