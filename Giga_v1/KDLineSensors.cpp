@@ -4,6 +4,22 @@
 #include "KDDebugUtility.hpp"
 #include "KDLineSensors.hpp"
 
+void KDLineSensors::setWhiteValue()
+{
+    whiteValue = analogRead(KDHardwere::LineAnalogPin);
+}
+
+void KDLineSensors::setGreenValue()
+{
+    greenValue = analogRead(KDHardwere::LineAnalogPin);
+}
+
+void KDLineSensors::setThreshold()
+{
+    int lineThreshold = round(greenValue * 0.7 + whiteValue * 0.3);
+    analogWrite(KDHardwere::LineThreshold, lineThreshold);
+}
+
 void KDLineSensors::printValue()
 {
     KDDebugUtility::printValueWithTag("Front", analogRead(KDHardwere::FrontLineSensorPin));
