@@ -1,8 +1,11 @@
 #include <Arduino.h>
-#include "KDSwitchObserver.hpp"
-#include "KDHardwere.hpp"
+//#include "TonePlayer.hpp"
+//#include "Pitches.hpp"
+#include "KDLineSensors.hpp"
 #include "KDSharedObjects.hpp"
+#include "KDHardwere.hpp"
 #include "KDDebugUtility.hpp"
+#include "KDSwitchObserver.hpp"
 
 void KDSwitchObserver::reset()
 {
@@ -15,7 +18,12 @@ bool KDSwitchObserver::readMainSwitch()
 {
     bool switch1State = digitalReadFast(KDHardwere::Switch1Pin);
     if (previousMainSwitch && !switch1State)
+    {
         mainSwitch = !mainSwitch;
+        lineSensorsInstance->setGreenValue();
+        lineSensorsInstance->setThreshold();
+        tonePlayer.play();
+    }
 
     previousMainSwitch = switch1State;
 
@@ -28,7 +36,7 @@ bool KDSwitchObserver::readDashSwitch()
     if (previousDashSwitch && !switch2State)
     {
         dashSwitch = !dashSwitch;
-        //setLineThreshold
+        lineSensorsInstance->setWhiteValue();
     }
 
     previousDashSwitch = switch2State;
