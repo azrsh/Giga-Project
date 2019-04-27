@@ -1,6 +1,9 @@
 #ifndef KD_LINE_SENSORS_h
 #define KD_LINE_SENSORS_h
 
+#include "KDSharedObjects.hpp"
+#include "KDHardwere.hpp"
+
 class KDLineSensors
 {
   public:
@@ -12,7 +15,14 @@ class KDLineSensors
     INLINE bool CheckRearLineSensor() { return analogRead(KDHardwere::RearLineSensorPin) > 900; }
     INLINE bool CheckRightLineSensor() { return analogRead(KDHardwere::RightLineSensorPin) > 900; }
     INLINE bool CheckLeftLineSensor() { return analogRead(KDHardwere::LeftLineSensorPin) > 900; }*/
+    void setWhiteValue();
+    void setGreenValue();
+    void setThreshold();
     void printValue();
+
+  private:
+    int whiteValue = 0;
+    int greenValue = 0;
 };
 
 #endif
