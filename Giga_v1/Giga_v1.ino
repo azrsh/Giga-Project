@@ -67,7 +67,7 @@ void setup()
     analogWrite(KDHardwere::LineThreshold, 85);
 
     //ライン処理のためのタイマ割り込みを設定して開始
-    FlexiTimer2::set(1, 1.0 / 7500, lineProcess1);
+    FlexiTimer2::set(1, 2.0 / 7500, lineProcess1);
     FlexiTimer2::start();
 }
 
