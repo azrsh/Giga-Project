@@ -17,7 +17,8 @@ void KDLineSensors::setGreenValue()
 void KDLineSensors::setThreshold()
 {
     int lineThreshold = round(greenValue * 0.7 + whiteValue * 0.3);
-    analogWrite(KDHardwere::LineThreshold, lineThreshold);
+    //analogWrite(KDHardwere::LineThreshold, lineThreshold);
+    analogWrite(KDHardwere::LineThreshold, 85);
 }
 
 void KDLineSensors::printValue()

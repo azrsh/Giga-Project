@@ -13,13 +13,13 @@ static constexpr float GyroPidKD = GyroPidKP * 14.5;
 
 //仮置き-------------------------------------------------------------
 //この囲みの中のブロックはMPU6050以外はその外側に依存していな
-static constexpr int GyroX = 250;
-static constexpr int GyroY = -65;
-static constexpr int GyroZ = -10;
-static constexpr int AccelZ = 4302;
+static constexpr int GyroX = 105;
+static constexpr int GyroY = 51;
+static constexpr int GyroZ = -28;
+static constexpr int AccelZ = 368;
 /*calibtration result
-Sensor readings with offsets:	4	0	16389	0	-1	-1
-Your offsets:	-465	-1552	4302	250	-65	-10
+Sensor readings with offsets:	-2	6	16382	0	0	1
+Your offsets:	-3703	630	368	105	51	-28
 
 Data is printed as: acelX acelY acelZ giroX giroY giroZ
 Check that your sensor readings are close to 0 0 16384 0 0 0
@@ -73,7 +73,7 @@ void GryoStart()
     if (!mpu.testConnection())
     {
         Serial.println("MPU disconection");
-        digitalWrite(10, HIGH);
+        digitalWrite(13, HIGH);
         while (true)
         {
         }
@@ -81,7 +81,7 @@ void GryoStart()
     if (mpu.dmpInitialize() != 0)
     {
         Serial.println("MPU break");
-        digitalWrite(10, HIGH);
+        digitalWrite(13, HIGH);
         while (true)
         {
         }
@@ -98,9 +98,9 @@ void GryoStart()
 
 void setup()
 {
-    pinMode(10, OUTPUT);
-    digitalWrite(10, HIGH);
-    Serial.begin(9600);
+    pinMode(13, OUTPUT);
+    digitalWrite(13, LOW);
+    Serial.begin(115200);
     GryoStart();
     Serial.println("SetUp Finished.");
 }
