@@ -339,7 +339,7 @@ void lineProcess1()
             lineSensors.CheckRightLineSensor() ||                                            //---------------------------------
             lineSensors.CheckLeftLineSensor()) &&
            !(reactedLineDirecitionVector.x == 0 && reactedLineDirecitionVector.y == 0) &&
-           count < 1000) //---------------------------------
+           count < 100000) //---------------------------------
     {
         for (int i = 0; i < 10 && !(reactedLineDirecitionVector.x == 0 && reactedLineDirecitionVector.y == 0); i++)
             KDMoveCtrl::moveByLocalVector2(-(int)reactedLineDirecitionVector.x * DefaultPower, -(int)reactedLineDirecitionVector.y * DefaultPower, 0);
