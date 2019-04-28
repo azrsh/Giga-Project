@@ -10,13 +10,13 @@ class KDHardwere
   public:
     static constexpr uint8_t KickerPin = 50;
 
-    static constexpr uint8_t RightMotorDirectionPin = 24;
+    static constexpr uint8_t RightMotorDirectionPin = 25;
     static constexpr uint8_t LeftMotorDirectionPin = 26;
-    static constexpr uint8_t RearMotorDirectionPin = 25;
+    static constexpr uint8_t RearMotorDirectionPin = 24;
 
-    static constexpr uint8_t RightMotorPwmPin = 20;
+    static constexpr uint8_t RightMotorPwmPin = 21;
     static constexpr uint8_t LeftMotorPwmPin = 22;
-    static constexpr uint8_t RearMotorPwmPin = 21;
+    static constexpr uint8_t RearMotorPwmPin = 20;
 
     static constexpr uint8_t FrontLineSensorPin = 39;
     static constexpr uint8_t RearLineSensorPin = 36;

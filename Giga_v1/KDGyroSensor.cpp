@@ -8,7 +8,7 @@
 
 void KDGyroSensor::init()
 {
-    _serialInstance->begin(9600);
+    _serialInstance->begin(115200);
 }
 
 void KDGyroSensor::reset()

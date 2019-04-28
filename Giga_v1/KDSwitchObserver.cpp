@@ -17,12 +17,21 @@ void KDSwitchObserver::reset()
 bool KDSwitchObserver::readMainSwitch()
 {
     bool switch1State = digitalReadFast(KDHardwere::Switch1Pin);
-    if (previousMainSwitch && !switch1State)
+    bool switch2State = digitalReadFast(KDHardwere::Switch2Pin);
+    /*if (previousMainSwitch && !switch1State)
     {
         mainSwitch = !mainSwitch;
         lineSensorsInstance->setGreenValue();
         lineSensorsInstance->setThreshold();
         tonePlayer.play();
+    }*/
+    if (!previousMainSwitch && switch1State)
+    {
+        mainSwitch = true;
+    }
+    if (switch1State && switch2State)
+    {
+        mainSwitch = false;
     }
 
     previousMainSwitch = switch1State;
