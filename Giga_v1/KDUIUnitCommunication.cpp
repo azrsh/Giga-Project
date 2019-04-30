@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include "KDUIUnitCommunication.hpp"
 #include "KDHardwere.hpp"
-#include "KDSharedObjects.hpp"
 #include "KDDebugUtility.hpp"
 
 void KDUIUnitCommunication::init()

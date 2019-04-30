@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "KDSharedObjects.hpp"
+#include "KDModeMacros.hpp"
 #include "KDHardwere.hpp"
 #include "KDThreeMotors.hpp"
 

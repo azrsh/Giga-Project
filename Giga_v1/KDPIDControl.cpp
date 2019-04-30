@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include "KDSharedObjects.hpp"
 #include "KDPIDControl.hpp"
 
 //限界感応法のチューニング

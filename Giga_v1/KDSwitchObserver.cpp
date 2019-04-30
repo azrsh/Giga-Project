@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include "KDLineSensors.hpp"
-#include "KDSharedObjects.hpp"
 #include "KDHardwere.hpp"
 #include "KDDebugUtility.hpp"
 #include "KDSwitchObserver.hpp"

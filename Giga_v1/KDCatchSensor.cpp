@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include "KDHardwere.hpp"
-#include "KDSharedObjects.hpp"
 #include "KDDebugUtility.hpp"
 #include "KDCatchSensor.hpp"
 

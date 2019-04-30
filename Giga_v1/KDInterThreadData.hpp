@@ -1,5 +1,6 @@
 #ifndef KD_INTER_THREAD_DATA_h
 #define KD_INTER_THREAD_DATA_h
+
 #include "KDSharedObjects.hpp"
 
 class KDInterThreadData

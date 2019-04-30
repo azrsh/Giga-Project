@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include "KDSharedObjects.hpp"
 #include "KDMacroUtilities.hpp"
+#include "KDModeMacros.hpp"
 
 class KDDebugUtility
 {

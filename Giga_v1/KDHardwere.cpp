@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include "KDHardwere.hpp"
-#include "KDSharedObjects.hpp"
+#include "KDModeMacros.hpp"
 
 //ハードウェア依存クラス
 

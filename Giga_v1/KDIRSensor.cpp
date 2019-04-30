@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include "KDSharedObjects.hpp"
 #include "KDDebugUtility.hpp"
 #include "KDIRSensor.hpp"
 #include "KDHardwere.hpp"

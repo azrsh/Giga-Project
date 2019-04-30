@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include "KDGyroSensor.hpp"
 #include "KDHardwere.hpp"
-#include "KDSharedObjects.hpp"
 #include "KDDebugUtility.hpp"
 
 //_serialInstanceを元に戻すときはSerial1に置き換えること

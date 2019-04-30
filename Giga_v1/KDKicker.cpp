@@ -2,7 +2,6 @@
 #include <FlexiTimer2.h> //ラインセンサのタイマ割り込み用
 #include "KDKicker.hpp"
 #include "KDHardwere.hpp"
-#include "KDSharedObjects.hpp"
 #include "KDDebugUtility.hpp"
 
 //pinModeの初期化を各クラスに分散したらこっちに移動したい
