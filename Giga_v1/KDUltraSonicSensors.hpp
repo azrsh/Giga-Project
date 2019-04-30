@@ -4,8 +4,10 @@
 class KDUltraSonicSensors
 {
   public:
-    inline int GetRightDistance() { return (int)(analogRead(KDHardwere::RightUSSensorPin) * 0.3); }
-    inline int GetLeftDistance() { return (int)(analogRead(KDHardwere::LeftUSSensorPin) * 0.3); }
+    inline int getFrontDistance() { return (int)(analogRead(KDHardwere::FrontUSSensorPin) * 0.3); }
+    inline int getRearDistance() { return (int)(analogRead(KDHardwere::RearUSSensorPin) * 0.3); }
+    inline int getRightDistance() { return (int)(analogRead(KDHardwere::RightUSSensorPin) * 0.3); }
+    inline int getLeftDistance() { return (int)(analogRead(KDHardwere::LeftUSSensorPin) * 0.3); }
     void printValue();
 };
 

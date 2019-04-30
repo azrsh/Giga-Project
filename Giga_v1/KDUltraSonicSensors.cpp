@@ -6,7 +6,9 @@
 
 void KDUltraSonicSensors::printValue()
 {
-    KDDebugUtility::printValueWithTag("Right", GetRightDistance());
-    KDDebugUtility::printValueWithTag("Left", GetLeftDistance());
+    KDDebugUtility::printValueWithTag("Front", getFrontDistance());
+    KDDebugUtility::printValueWithTag("Rear", getRearDistance());
+    KDDebugUtility::printValueWithTag("Right", getRightDistance());
+    KDDebugUtility::printValueWithTag("Left", getLeftDistance());
     KDDebugUtility::println();
 }
