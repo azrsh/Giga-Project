@@ -80,10 +80,10 @@ void setup()
 
 void loop()
 {
-    //constexpr KDConstexprTest constexprTest = KDConstexprTest(10);
-    //static_assert(constexprTest.Test() == 10, "constexpr error");
+    //スイッチのテスト
     //switchObserver.printValue();
     //KDDebugUtility::printValueWithTag("switch", uiUnitCommunication.read());
+
     //スイッチがオフならこのif分以降は実行されない
     if (!switchObserver.readMainSwitch())
     {
