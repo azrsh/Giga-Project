@@ -28,8 +28,8 @@ class KDHardwere
     static constexpr uint8_t RightUSSensorPin = A2;
     static constexpr uint8_t LeftUSSensorPin = A3;
 
-    static constexpr uint8_t Switch1Pin = 9;
-    static constexpr uint8_t Switch2Pin = 10;
+    static constexpr uint8_t Switch1Pin = 10;
+    static constexpr uint8_t Switch2Pin = 9;
 
     static constexpr uint8_t CatchSensorPin = A16;
 
