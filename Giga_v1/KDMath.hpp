@@ -2,7 +2,7 @@
 #define KD_MATH_h
 
 //リテラル値(90、1.57など)または、constexprな定数を指定しないとかえって遅くなる
-#include "KDSharedObjects.hpp"
+#include "KDMacroUtilities.hpp"
 
 class KDMath
 {

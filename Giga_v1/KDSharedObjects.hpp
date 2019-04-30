@@ -3,8 +3,6 @@
 
 #include <Arduino.h>
 
-//INLINE展開のためのマクロ
-#define INLINE inline __attribute__((always_inline))
 
 //モード設定用のdefine
 //------------------------------------------

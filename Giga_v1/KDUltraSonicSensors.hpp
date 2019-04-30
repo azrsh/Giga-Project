@@ -1,6 +1,8 @@
 #ifndef KD_ULTRA_SONIC_SENSORS_h
 #define KD_ULTRA_SONIC_SENSORS_h
 
+#include "KDMacroUtilities.hpp"
+
 class KDUltraSonicSensors
 {
   public:

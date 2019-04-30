@@ -1,7 +1,7 @@
 #ifndef KD_LINE_SENSORS_h
 #define KD_LINE_SENSORS_h
 
-#include "KDSharedObjects.hpp"
+#include "KDMacroUtilities.hpp"
 #include "KDHardwere.hpp"
 
 class KDLineSensors

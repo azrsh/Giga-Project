@@ -1,6 +1,8 @@
 #ifndef KD_MOVE_CTRL_h
 #define KD_MOVE_CTRL_h
 
+#include "KDMacroUtilities.hpp"
+
 typedef struct
 {
     int right;
