@@ -18,21 +18,28 @@ bool KDSwitchObserver::readMainSwitch()
 {
     bool switch1State = digitalReadFast(KDHardwere::Switch1Pin);
     bool switch2State = digitalReadFast(KDHardwere::Switch2Pin);
-    /*if (previousMainSwitch && !switch1State)
+    static int falseCount = 0;
+    if (previousMainSwitch && !switch1State)
     {
         mainSwitch = !mainSwitch;
         lineSensorsInstance->setGreenValue();
         lineSensorsInstance->setThreshold();
         tonePlayer.play();
-    }*/
-    if (!previousMainSwitch && switch1State)
+    }
+    /*if (!previousMainSwitch && switch1State)
     {
         mainSwitch = true;
     }
     if (switch1State && switch2State)
     {
-        mainSwitch = false;
+        falseCount++;
     }
+    else
+    {
+        falseCount = 0;
+    }
+    if (falseCount > 100)
+        mainSwitch = false;*/
 
     previousMainSwitch = switch1State;
 

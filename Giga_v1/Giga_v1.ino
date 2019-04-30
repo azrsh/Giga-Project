@@ -65,9 +65,10 @@ void setup()
     digitalWriteFast(KDHardwere::LEDPin, HIGH);
 
     analogWrite(KDHardwere::LineThreshold, 85);
+    //analogWrite(KDHardwere::LineThreshold, 400);
 
     //ライン処理のためのタイマ割り込みを設定して開始
-    FlexiTimer2::set(1, 2.0 / 7500, lineProcess1);
+    FlexiTimer2::set(1, 1.0 / 7500, lineProcess1);
     FlexiTimer2::start();
 }
 
@@ -88,11 +89,10 @@ void loop()
     //スタートダッシュスイッチ
     if (!isStarted)
     {
-        if (switchObserver.readDashSwitch())
+        //if (switchObserver.readDashSwitch())
         {
             isStarted = true;
-            //KDMoveCtrl::moveByLocalDegreeAndPower(0, DefaultPower, 0);
-            delay(10);
+            KDMoveCtrl::moveByLocalDegreeAndPower(0, DefaultPower, 0);
         }
     }
 
@@ -216,8 +216,8 @@ void loop()
             //KDDebugUtility::println();
 
             power = round(power * 1.5f);
-            int rightDistance = usSensors.GetRightDistance();
-            int leftDistance = usSensors.GetLeftDistance();
+            int rightDistance = usSensors.getRightDistance();
+            int leftDistance = usSensors.getLeftDistance();
             int diff = rightDistance - leftDistance;
             if (true /*abs(diff) < 20*/)
             {
@@ -299,14 +299,14 @@ INLINE int getAngularVelocity(int bodyDirection, int targetAttitude)
 
 INLINE void lockMovementByLineVector()
 {
-    VectorXY_t lineVector = {0, 0};
+    /*VectorXY_t lineVector = {0, 0};
     unsigned long timeStamp = 0;
     interThreadData.read(&lineVector, &timeStamp);
-    if (millis() - timeStamp < 1000)
+    if (millis() - timeStamp < 5000)
     {
-        KDMoveCtrl::lockMovement((char)lineVector.x, (char)lineVector.y);
+        //KDMoveCtrl::lockMovement((char)lineVector.x, (char)lineVector.y);
     }
-    else
+    else*/
     {
         KDMoveCtrl::unlockMovement();
     }
@@ -318,10 +318,9 @@ void lineProcess1()
 {
     VectorXY_t reactedLineDirecitionVector = {0, 0}; //反応したラインセンサの保存
     getReactedLineVector(&reactedLineDirecitionVector);
-    interThreadData.push(reactedLineDirecitionVector);
     if (reactedLineDirecitionVector.x == 0 && reactedLineDirecitionVector.y == 0)
     {
-        return;
+        //return;
         if (lineSensors.CheckRearLineSensor() && !lineSensors.CheckLeftLineSensor())
             reactedLineDirecitionVector.y = -1;
         else if (!lineSensors.CheckRearLineSensor() && lineSensors.CheckLeftLineSensor())
@@ -332,14 +331,16 @@ void lineProcess1()
             reactedLineDirecitionVector.y = -1;
         }
     }
+    interThreadData.push(reactedLineDirecitionVector);
+
     int count = 0;
-    while (switchObserver.readMainSwitch() && /*digitalReadFast(KDHardwere::Switch1Pin) &&*/ //メインスイッチの確認
-           (lineSensors.CheckFrontLineSensor() ||                                            //---------------------------------
-            lineSensors.CheckRearLineSensor() ||                                             //ラインセンサが一つでも反応しているか
-            lineSensors.CheckRightLineSensor() ||                                            //---------------------------------
+    while (switchObserver.readMainSwitch() &&     //メインスイッチの確認
+           (lineSensors.CheckFrontLineSensor() || //---------------------------------
+            lineSensors.CheckRearLineSensor() ||  //ラインセンサが一つでも反応しているか
+            lineSensors.CheckRightLineSensor() || //---------------------------------
             lineSensors.CheckLeftLineSensor()) &&
            !(reactedLineDirecitionVector.x == 0 && reactedLineDirecitionVector.y == 0) &&
-           count < 100000) //---------------------------------
+           count < 100) //---------------------------------
     {
         for (int i = 0; i < 10 && !(reactedLineDirecitionVector.x == 0 && reactedLineDirecitionVector.y == 0); i++)
             KDMoveCtrl::moveByLocalVector2(-(int)reactedLineDirecitionVector.x * DefaultPower, -(int)reactedLineDirecitionVector.y * DefaultPower, 0);
