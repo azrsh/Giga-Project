@@ -6,6 +6,7 @@
 #include "KDHardwere.hpp"
 #include "KDDebugUtility.hpp"
 #include "KDSwitchObserver.hpp"
+#include "TonePlayer.hpp"
 
 void KDSwitchObserver::reset()
 {
@@ -24,7 +25,7 @@ bool KDSwitchObserver::readMainSwitch()
         mainSwitch = !mainSwitch;
         lineSensorsInstance->setGreenValue();
         lineSensorsInstance->setThreshold();
-        tonePlayer.play();
+        tonePlayerInstance->play();
     }
     /*if (!previousMainSwitch && switch1State)
     {

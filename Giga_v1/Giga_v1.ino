@@ -19,6 +19,9 @@
 #include "KDInterThreadData.hpp"
 #include "KDSwitchObserver.hpp"
 
+#include "TonePlayer.hpp"
+#include "Pitches.hpp"
+
 #include "KDConstexprTest.hpp"
 
 static constexpr int16_t DefaultPower = 256;
@@ -32,7 +35,10 @@ KDGyroSensor gyroSensor = KDGyroSensor(&Serial5);
 KDCatchSensor catchSensor = KDCatchSensor();
 
 KDUIUnitCommunication uiUnitCommunication = KDUIUnitCommunication(&Serial2);
-KDSwitchObserver switchObserver = KDSwitchObserver(&lineSensors);
+int melody[1] = {Pitches::NoteC4};
+int noteDurations[1] = {4};
+TonePlayer tonePlayer = TonePlayer(1, melody, noteDurations);
+KDSwitchObserver switchObserver = KDSwitchObserver(&lineSensors, &tonePlayer);
 
 //方位補正用のPID制御インスタンスだが、P制御しか実装してない
 //KP=0.071~0.072の範囲

@@ -1,13 +1,13 @@
 #ifndef KD_SWITCH_OBSERVER_h
 #define KD_SWITCH_OBSERVER_h
 
-#include "TonePlayer.hpp"
-#include "Pitches.hpp"
+class TonePlayer;
 
 class KDSwitchObserver
 {
   public:
-    KDSwitchObserver(KDLineSensors *lineSensors) : lineSensorsInstance(lineSensors){};
+    KDSwitchObserver(KDLineSensors *lineSensors, TonePlayer *tonePlayer)
+        : lineSensorsInstance(lineSensors), tonePlayerInstance(tonePlayer){};
     void reset();
     bool readMainSwitch();
     bool readDashSwitch();
@@ -19,9 +19,7 @@ class KDSwitchObserver
     bool mainSwitch = false;
     bool dashSwitch = false;
     KDLineSensors *lineSensorsInstance;
-    int melody[1] = {Pitches::NoteC4};
-    int noteDurations[1] = {4};
-    TonePlayer tonePlayer = TonePlayer(1, melody, noteDurations);
+    TonePlayer *tonePlayerInstance;
 };
 
 #endif
