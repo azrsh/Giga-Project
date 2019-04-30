@@ -3,6 +3,7 @@
 #include "KDKicker.hpp"
 #include "KDHardwere.hpp"
 #include "KDSharedObjects.hpp"
+#include "KDDebugUtility.hpp"
 
 //pinModeの初期化を各クラスに分散したらこっちに移動したい
 /*void KDKicker::KDKicker()
@@ -28,4 +29,11 @@ void KDKicker::kick()
     digitalWriteFast(KDHardwere::KickerPin, LOW);  //元に戻す
     FlexiTimer2::start();
     pastKickTime = millis();
+}
+
+void KDKicker::kickWithSerialPrint()
+{
+    KDDebugUtility::printString("Kick");
+    KDDebugUtility::println();
+    kick();
 }
