@@ -29,6 +29,10 @@ class KDMotor
 
         analogWrite(pwmPin, power);
     };
+    void brake()
+    {
+        analogWrite(pwmPin, 0);
+    };
 };
 
 #endif
