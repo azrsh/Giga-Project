@@ -10,7 +10,7 @@ class TonePlayer
 
   public:
     TonePlayer(int size, int *melody, int *noteDurations) : size(size), melody(melody), noteDurations(noteDurations) {}
-    //~TonePlayer();
+    ~TonePlayer() {}
     void play();
 };
 
