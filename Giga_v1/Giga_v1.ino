@@ -26,6 +26,8 @@
 
 #include "KDConstexprTest.hpp"
 
+#include "KDMotor.hpp"
+
 static constexpr int16_t DefaultPower = 256;
 
 //センサ制御クラスのインスタンス
@@ -58,6 +60,8 @@ KDInterThreadData interThreadData = KDInterThreadData();
 //スタート後かのフラグ、スタートダッシュ用、別の方法に変えたい
 bool isStarted = false;
 
+KDMotor<KDHardwere::RightMotorDirectionPin, KDHardwere::RightMotorPwmPin, true> rightMotor(1.0);
+
 void setup()
 {
     //シリアル通信及びI2C通信の初期化
@@ -85,6 +89,9 @@ void loop()
     //スイッチのテスト
     //switchObserver.printValue();
     //KDDebugUtility::printValueWithTag("switch", uiUnitCommunication.read());
+
+    rightMotor.drive(128);
+    return;
 
     //スイッチがオフならこのif分以降は実行されない
     if (!switchObserver.readMainSwitch())
