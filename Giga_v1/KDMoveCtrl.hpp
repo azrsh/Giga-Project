@@ -5,6 +5,8 @@
 #include "KDMotor.hpp"
 #include "KDThreeMotors.hpp"
 
+class KDMoveLocker;
+
 typedef KDMotor<KDHardwere::RightMotorDirectionPin, KDHardwere::RightMotorPwmPin, true> RightMotor;
 typedef KDMotor<KDHardwere::LeftMotorDirectionPin, KDHardwere::LeftMotorPwmPin, true> LeftMotor;
 typedef KDMotor<KDHardwere::RearMotorDirectionPin, KDHardwere::RearMotorPwmPin, false> RearMotor;
@@ -19,6 +21,7 @@ typedef struct
 class KDMoveCtrl
 {
   public:
+    static void init(KDMoveLocker *moveLocker);
     static VectorXY_t baseVector;
     static void moveByLocalVector2(int x, int y, int w);
     static void moveByLocalVector2(int x, int y, int w, bool isLock);
@@ -30,26 +33,13 @@ class KDMoveCtrl
     static MotorPowers *getMotorPowersByLocalDegreeAndPower(int degree, int power, int w);
     static void addMotorPowersByLocalDegreeAndPower(MotorPowers *motorPowers);
 
-    INLINE static void lockMovement(char x, char y)
-    {
-        lockX = x;
-        lockY = y;
-    };
-    INLINE static void unlockMovement()
-    {
-        lockX = 0;
-        lockY = 0;
-    };
-
   private:
-    static char lockX;
-    static char lockY;
-    static int getLockedDegree(int degree);
-
     static RightMotor rightMotor;
     static LeftMotor leftMotor;
     static RearMotor rearMotor;
     static KDThreeMotors<RightMotor, LeftMotor, RearMotor> threeMotors;
+
+    static KDMoveLocker *moveLocker;
 };
 
 #endif

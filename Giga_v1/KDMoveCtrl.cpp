@@ -4,16 +4,24 @@
 #include "KDMotor.hpp"
 #include "KDThreeMotors.hpp"
 #include "KDMoveCtrl.hpp"
+#include "KDMoveLocker.hpp"
 #include "KDMath.hpp"
 
-char KDMoveCtrl::lockX = 0;
-char KDMoveCtrl::lockY = 0;
+#include "KDMotor.hpp"
+
 VectorXY_t KDMoveCtrl::baseVector = {0, 0};
 
 RightMotor KDMoveCtrl::rightMotor(1.0);
 LeftMotor KDMoveCtrl::leftMotor(1.0);
 RearMotor KDMoveCtrl::rearMotor(1.0);
 KDThreeMotors<RightMotor, LeftMotor, RearMotor> KDMoveCtrl::threeMotors(&rightMotor, &leftMotor, &rearMotor);
+
+KDMoveLocker *KDMoveCtrl::moveLocker = nullptr;
+
+void KDMoveCtrl::init(KDMoveLocker *moveLocker)
+{
+    KDMoveCtrl::moveLocker = moveLocker;
+}
 
 //非ハード依存関数
 /*void KDMoveCtrl::moveByWorldVector2(int worldX, int worldY, int w)
@@ -68,10 +76,9 @@ MotorPowers *KDMoveCtrl::getMotorPowersByLocalVector2(int x, int y, int w, bool 
 {
     if (isLock)
     {
-        if (lockX != 0 && (lockX > 0) == (x > 0))
-            x = 0;
-        if (lockY != 0 && (lockY > 0) == (y > 0))
-            y = 0;
+        VectorXY_t vector = moveLocker->getLockedVector({x, y});
+        x = vector.x;
+        y = vector.y;
     }
 
     //元の式
@@ -93,7 +100,7 @@ MotorPowers *KDMoveCtrl::getMotorPowersByLocalVector2(int x, int y, int w, bool 
 
 MotorPowers *KDMoveCtrl::getMotorPowersByLocalDegreeAndPower(int degree, int power, int w)
 {
-    degree = getLockedDegree(degree);
+    degree = moveLocker->getLockedDegree(degree);
     if (degree == -1)
         power = 0;
 
@@ -113,85 +120,4 @@ void KDMoveCtrl::addMotorPowersByLocalDegreeAndPower(MotorPowers *motorPowers)
     motorPowers->right += baseMotorPowers->right;
     motorPowers->left += baseMotorPowers->left;
     motorPowers->rear += baseMotorPowers->rear;
-}
-
-int KDMoveCtrl::getLockedDegree(int degree)
-{
-    degree %= 360;
-    if (degree < 0)
-        degree += 360;
-
-    if (lockX == 0 && lockY == 1)
-    {
-        if (degree > 0 && degree < 90)
-            return 90;
-        else if (degree > 270)
-            return 270;
-        else if (degree == 0)
-            return -1;
-    }
-    if (lockX == 0 && lockY == -1)
-    {
-        if (degree > 90 && degree < 180)
-            return 90;
-        else if (degree > 180 && degree < 270)
-            return 270;
-        else if (degree == 180)
-            return -1;
-    }
-    if (lockX == 1 && lockY == 0)
-    {
-        if (degree > 0 && degree < 90)
-            return 0;
-        else if (degree > 90 && degree < 180)
-            return 180;
-        else if (degree == 90)
-            return -1;
-    }
-    if (lockX == -1 && lockY == 0)
-    {
-        if (degree > 270)
-            return 0;
-        else if (degree > 180 && degree < 270)
-            return 180;
-        else if (degree == 270)
-            return -1;
-    }
-    if (lockX == 1 && lockY == 1)
-    {
-        if (degree > 45 && degree < 135)
-            return 135;
-        else if (degree > 315 || degree < 45)
-            return 315;
-        else if (degree == 45)
-            return -1;
-    }
-    if (lockX == -1 && lockY == 1)
-    {
-        if (degree > 315 || degree < 45)
-            return 45;
-        else if (degree > 225 && degree < 315)
-            return 225;
-        else if (degree == 315)
-            return -1;
-    }
-    if (lockX == 1 && lockY == -1)
-    {
-        if (degree > 45 && degree < 135)
-            return 45;
-        else if (degree > 135 && degree < 225)
-            return 225;
-        else if (degree == 135)
-            return -1;
-    }
-    if (lockX == -1 && lockY == -1)
-    {
-        if (degree > 135 && degree < 225)
-            return 135;
-        else if (degree > 225 && degree < 315)
-            return 315;
-        else if (degree == 225)
-            return -1;
-    }
-    return degree;
 }

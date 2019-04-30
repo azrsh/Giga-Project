@@ -27,6 +27,7 @@
 #include "KDConstexprTest.hpp"
 
 #include "KDMotor.hpp"
+#include "KDMoveLocker.hpp"
 
 static constexpr int16_t DefaultPower = 256;
 
@@ -61,6 +62,7 @@ KDInterThreadData interThreadData = KDInterThreadData();
 bool isStarted = false;
 
 KDMotor<KDHardwere::RightMotorDirectionPin, KDHardwere::RightMotorPwmPin, true> rightMotor(1.0);
+KDMoveLocker moveLocker;
 
 void setup()
 {
@@ -72,6 +74,8 @@ void setup()
     gyroSensor.init();
     kicker.init();
     irSensors.init();
+
+    KDMoveCtrl::init(&moveLocker);
 
     pinMode(KDHardwere::LEDPin, OUTPUT);
     digitalWriteFast(KDHardwere::LEDPin, HIGH);
@@ -316,11 +320,11 @@ INLINE void lockMovementByLineVector()
     interThreadData.read(&lineVector, &timeStamp);
     if (millis() - timeStamp < 5000)
     {
-        //KDMoveCtrl::lockMovement((char)lineVector.x, (char)lineVector.y);
+        //moveLocker.lockMovement((char)lineVector.x, (char)lineVector.y);
     }
     else*/
     {
-        KDMoveCtrl::unlockMovement();
+        moveLocker.unlockMovement();
     }
 }
 
