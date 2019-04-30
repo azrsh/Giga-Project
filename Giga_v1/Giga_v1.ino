@@ -90,9 +90,6 @@ void loop()
     //switchObserver.printValue();
     //KDDebugUtility::printValueWithTag("switch", uiUnitCommunication.read());
 
-    rightMotor.drive(128);
-    return;
-
     //スイッチがオフならこのif分以降は実行されない
     if (!switchObserver.readMainSwitch())
     {

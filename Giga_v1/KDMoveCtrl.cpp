@@ -1,5 +1,7 @@
 #include <Arduino.h>
 #include "KDSharedObjects.hpp"
+#include "KDHardwere.hpp"
+#include "KDMotor.hpp"
 #include "KDThreeMotors.hpp"
 #include "KDMoveCtrl.hpp"
 #include "KDMath.hpp"
@@ -7,6 +9,11 @@
 char KDMoveCtrl::lockX = 0;
 char KDMoveCtrl::lockY = 0;
 VectorXY_t KDMoveCtrl::baseVector = {0, 0};
+
+RightMotor KDMoveCtrl::rightMotor(1.0);
+LeftMotor KDMoveCtrl::leftMotor(1.0);
+RearMotor KDMoveCtrl::rearMotor(1.0);
+KDThreeMotors<RightMotor, LeftMotor, RearMotor> KDMoveCtrl::threeMotors(&rightMotor, &leftMotor, &rearMotor);
 
 //非ハード依存関数
 /*void KDMoveCtrl::moveByWorldVector2(int worldX, int worldY, int w)
@@ -31,9 +38,9 @@ void KDMoveCtrl::moveByLocalVector2(int x, int y, int w, bool isLock)
 {
     MotorPowers *motorPowers = getMotorPowersByLocalVector2(x, y, w, isLock);
 
-    KDThreeMotors::SetMotorPower(motorPowers->right,
-                                 motorPowers->left,
-                                 motorPowers->rear);
+    threeMotors.drive(motorPowers->right,
+                      motorPowers->left,
+                      motorPowers->rear);
 }
 
 void KDMoveCtrl::moveByLocalDegreeAndPower(int degrees, int power, int w)
@@ -47,9 +54,9 @@ void KDMoveCtrl::moveByLocalDegreeAndPower(int degrees, int power, int w, bool i
     if (isAddBaseVector)
         addMotorPowersByLocalDegreeAndPower(motorPowers);
 
-    KDThreeMotors::SetMotorPower(motorPowers->right,
-                                 motorPowers->left,
-                                 motorPowers->rear);
+    threeMotors.drive(motorPowers->right,
+                      motorPowers->left,
+                      motorPowers->rear);
 }
 
 MotorPowers *KDMoveCtrl::getMotorPowersByLocalVector2(int x, int y, int w)

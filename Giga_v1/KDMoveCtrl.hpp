@@ -2,6 +2,12 @@
 #define KD_MOVE_CTRL_h
 
 #include "KDMacroUtilities.hpp"
+#include "KDMotor.hpp"
+#include "KDThreeMotors.hpp"
+
+typedef KDMotor<KDHardwere::RightMotorDirectionPin, KDHardwere::RightMotorPwmPin, true> RightMotor;
+typedef KDMotor<KDHardwere::LeftMotorDirectionPin, KDHardwere::LeftMotorPwmPin, true> LeftMotor;
+typedef KDMotor<KDHardwere::RearMotorDirectionPin, KDHardwere::RearMotorPwmPin, false> RearMotor;
 
 typedef struct
 {
@@ -39,6 +45,11 @@ class KDMoveCtrl
     static char lockX;
     static char lockY;
     static int getLockedDegree(int degree);
+
+    static RightMotor rightMotor;
+    static LeftMotor leftMotor;
+    static RearMotor rearMotor;
+    static KDThreeMotors<RightMotor, LeftMotor, RearMotor> threeMotors;
 };
 
 #endif

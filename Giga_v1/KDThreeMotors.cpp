@@ -4,7 +4,7 @@
 #include "KDHardwere.hpp"
 #include "KDThreeMotors.hpp"
 
-/*INLINE*/ void KDThreeMotors::SetMotorPower(int right, int left, int rear)
+/*INLINE*/ /* void KDThreeMotors::SetMotorPower(int right, int left, int rear)
 {
     //出力比を保って最大値に補正
 #ifdef SAFE_MODE
@@ -64,9 +64,11 @@
     analogWrite(KDHardwere::RearMotorPwmPin, rear);
 }
 
-/*INLINE*/ void KDThreeMotors::Brake()
+INLINE
+void KDThreeMotors::Brake()
 {
     analogWrite(KDHardwere::RightMotorPwmPin, 0);
     analogWrite(KDHardwere::LeftMotorPwmPin, 0);
     analogWrite(KDHardwere::RearMotorPwmPin, 0);
 }
+*/
