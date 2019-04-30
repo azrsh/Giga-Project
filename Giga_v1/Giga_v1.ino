@@ -22,6 +22,8 @@
 #include "TonePlayer.hpp"
 #include "Pitches.hpp"
 
+#include "KDMacroUtilities.hpp"
+
 #include "KDConstexprTest.hpp"
 
 static constexpr int16_t DefaultPower = 256;
