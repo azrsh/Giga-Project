@@ -15,8 +15,12 @@ class KDThreeMotors
   public:
     KDThreeMotors(RightMotor *rightMotor, LeftMotor *leftMotor, RearMotor *rearMotor) : rightMotor(rightMotor), leftMotor(leftMotor), rearMotor(rearMotor){};
     ~KDThreeMotors(){};
-    void drive(int right, int left, int rear)
+    void drive(const MotorPowers *motorPowers)
     {
+        int right = motorPowers->right;
+        int left = motorPowers->left;
+        int rear = motorPowers->rear;
+
 #ifdef SAFE_MODE
         //ここでやるべきではない
         static_assert(KDSharedObjects::MaximamMotorPower < 256, "ERROR：KDSharedObjects::MaximamMotorPower（モータ出力の最大値）がpwm出力の最大値を超えています");

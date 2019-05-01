@@ -23,9 +23,7 @@ class KDMoveCtrl
     {
         MotorPowers *motorPowers = getMotorPowersByLocalVector2(x, y, w, isLock);
 
-        threeMotors->drive(motorPowers->right,
-                           motorPowers->left,
-                           motorPowers->rear);
+        threeMotors->drive(motorPowers);
     };
 
     void moveByLocalDegreeAndPower(int degrees, int power, int w)
@@ -39,9 +37,7 @@ class KDMoveCtrl
         if (isAddBaseVector)
             addMotorPowersByLocalDegreeAndPower(motorPowers);
 
-        threeMotors->drive(motorPowers->right,
-                           motorPowers->left,
-                           motorPowers->rear);
+        threeMotors->drive(motorPowers);
     };
 
   private:
