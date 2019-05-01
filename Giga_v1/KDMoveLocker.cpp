@@ -1,4 +1,4 @@
-#include "KDSharedObjects.hpp"
+#include "KDDataStructure.hpp"
 #include "KDMoveLocker.hpp"
 
 VectorXY_t KDMoveLocker::getLockedVector(VectorXY_t vector) const

@@ -2,7 +2,7 @@
 #define KD_DEBUG_UTILITY_h
 
 #include <Arduino.h>
-#include "KDSharedObjects.hpp"
+#include "KDDataStructure.hpp"
 #include "KDMacroUtilities.hpp"
 #include "KDModeMacros.hpp"
 

@@ -29,6 +29,8 @@
 #include "KDMotor.hpp"
 #include "KDMoveLocker.hpp"
 
+#include "KDDataStructure.hpp"
+
 static constexpr int16_t DefaultPower = 256;
 
 //センサ制御クラスのインスタンス

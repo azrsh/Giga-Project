@@ -3,15 +3,9 @@
 
 #include "KDMacroUtilities.hpp"
 #include "KDSharedObjects.hpp"
+#include "KDDataStructure.hpp"
 #include "KDMoveLocker.hpp"
 #include "KDMath.hpp"
-
-typedef struct
-{
-    int right;
-    int left;
-    int rear;
-} MotorPowers;
 
 template <class ThreeMotors>
 class KDMoveCtrl

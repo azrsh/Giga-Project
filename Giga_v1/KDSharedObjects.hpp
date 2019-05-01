@@ -27,23 +27,4 @@ class KDSharedObjects
     const int DefaultConpassDegree;
 };
 
-//直交座標系ベクトルの型・変数の定義
-typedef struct
-{
-    float x;
-    float y;
-} VectorXYf_t;
-
-typedef struct
-{
-    int x;
-    int y;
-} VectorXY_t;
-
-typedef struct
-{
-    int distance;
-    int degrees;
-} VectorDD_t;
-
 #endif
