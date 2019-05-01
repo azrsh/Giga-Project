@@ -5,14 +5,14 @@
 
 //ハードウェア依存クラス
 
-void KDHardwere::Initialize()
+void KDHardwere::initialize()
 {
 #ifdef DEBUG_MODE
     Serial.begin(2000000);
 #endif
 
     Wire.begin();
-    SetupDigitalPins();
+    setupDigitalPins();
 
     //周波数変更によってFTM0は死ぬ
     analogWriteFrequency(RightMotorDirectionPin, 100000);
@@ -20,7 +20,7 @@ void KDHardwere::Initialize()
     analogWriteFrequency(RearMotorDirectionPin, 100000);
 }
 
-void KDHardwere::SetupDigitalPins()
+void KDHardwere::setupDigitalPins()
 {
     pinMode(KickerPin, OUTPUT);
 

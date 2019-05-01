@@ -78,7 +78,7 @@ void setup()
 {
     //シリアル通信及びI2C通信の初期化
     //ピンモードの設定など
-    KDHardwere::Initialize();
+    KDHardwere::initialize();
 
     //初期化が必要なモジュールの初期化
     gyroSensor.init();

@@ -53,11 +53,11 @@ class KDHardwere
     rx : 3, tx : 4 EmptyMicon 
     */
 
-    static void Initialize(void);
+    static void initialize(void);
 
   private:
     //pinModeの初期化用関数
-    static void SetupDigitalPins(void);
+    static void setupDigitalPins(void);
 };
 
 #endif
