@@ -20,6 +20,7 @@
 #include "KDSwitchObserver.hpp"
 
 #include "TonePlayer.hpp"
+#include "KDUltraSonicSensor.hpp"    //
 #include "Pitches.hpp"
 
 #include "KDMacroUtilities.hpp"
@@ -35,11 +36,16 @@ static constexpr int16_t DefaultPower = 256;
 
 //センサ制御クラスのインスタンス
 KDIRSensor irSensors = KDIRSensor(&Serial4);
-KDUltraSonicSensors usSensors = KDUltraSonicSensors();
 KDKicker kicker = KDKicker();
 KDLineSensors lineSensors = KDLineSensors();
 KDGyroSensor gyroSensor = KDGyroSensor(&Serial5);
 KDCatchSensor catchSensor = KDCatchSensor();
+
+KDUltraSonicSensor frontUSSensor(KDHardwere::FrontUSSensorPin, 0.3);
+KDUltraSonicSensor rearUSSensor(KDHardwere::RearUSSensorPin, 0.3);
+KDUltraSonicSensor rightUSSensor(KDHardwere::RightUSSensorPin, 0.3);
+KDUltraSonicSensor leftUSSensor(KDHardwere::LeftUSSensorPin, 0.3);
+KDUltraSonicSensors usSensors = KDUltraSonicSensors(&frontUSSensor, &rearUSSensor, &rightUSSensor, &leftUSSensor);
 
 KDUIUnitCommunication uiUnitCommunication = KDUIUnitCommunication(&Serial2);
 int melody[1] = {Pitches::NoteC4};

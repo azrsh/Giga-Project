@@ -3,13 +3,38 @@
 
 #include "KDMacroUtilities.hpp"
 
+class KDUltraSonicSensor;
+
+enum FieldArea
+{
+    None = -1,
+    CenterForward = 0,
+    CenterBack = 1,
+    RightSideForward = 2,
+    RightSideBack = 3,
+    LeftSideForward = 4,
+    LeftSideBack = 5,
+};
+
 class KDUltraSonicSensors
 {
+  private:
+    KDUltraSonicSensor *frontSensor;
+    KDUltraSonicSensor *rearSensor;
+    KDUltraSonicSensor *rightSensor;
+    KDUltraSonicSensor *leftSensor;
+    enum FieldArea currentArea;
+
   public:
-    INLINE int getFrontDistance() { return (int)(analogRead(KDHardwere::FrontUSSensorPin) * 0.3); }
-    INLINE int getRearDistance() { return (int)(analogRead(KDHardwere::RearUSSensorPin) * 0.3); }
-    INLINE int getRightDistance() { return (int)(analogRead(KDHardwere::RightUSSensorPin) * 0.3); }
-    INLINE int getLeftDistance() { return (int)(analogRead(KDHardwere::LeftUSSensorPin) * 0.3); }
+    KDUltraSonicSensors(KDUltraSonicSensor *frontSensor, KDUltraSonicSensor *rearSensor, KDUltraSonicSensor *rightSensor, KDUltraSonicSensor *leftSensor)
+        : frontSensor(frontSensor), rearSensor(rearSensor), rightSensor(rightSensor), leftSensor(leftSensor) {}
+    void update();
+    enum FieldArea getCurrentArea();
+    int getFrontDistance();
+    int getRearDistance();
+    int getRightDistance();
+    int getLeftDistance();
+
     void printValue();
 };
 
