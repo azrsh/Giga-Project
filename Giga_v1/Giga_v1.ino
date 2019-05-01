@@ -345,9 +345,9 @@ void lineProcess1()
     if (reactedLineDirecitionVector.x == 0 && reactedLineDirecitionVector.y == 0)
     {
         //return;
-        if (lineSensors.CheckRearLineSensor() && !lineSensors.CheckLeftLineSensor())
+        if (lineSensors.checkRearLineSensor() && !lineSensors.checkLeftLineSensor())
             reactedLineDirecitionVector.y = -1;
-        else if (!lineSensors.CheckRearLineSensor() && lineSensors.CheckLeftLineSensor())
+        else if (!lineSensors.checkRearLineSensor() && lineSensors.checkLeftLineSensor())
             reactedLineDirecitionVector.x = -1;
         else
         {
@@ -359,10 +359,10 @@ void lineProcess1()
 
     int count = 0;
     while (switchObserver.readMainSwitch() &&     //メインスイッチの確認
-           (lineSensors.CheckFrontLineSensor() || //---------------------------------
-            lineSensors.CheckRearLineSensor() ||  //ラインセンサが一つでも反応しているか
-            lineSensors.CheckRightLineSensor() || //---------------------------------
-            lineSensors.CheckLeftLineSensor()) &&
+           (lineSensors.checkFrontLineSensor() || //---------------------------------
+            lineSensors.checkRearLineSensor() ||  //ラインセンサが一つでも反応しているか
+            lineSensors.checkRightLineSensor() || //---------------------------------
+            lineSensors.checkLeftLineSensor()) &&
            !(reactedLineDirecitionVector.x == 0 && reactedLineDirecitionVector.y == 0) &&
            count < 100) //---------------------------------
     {
@@ -382,13 +382,13 @@ void getReactedLineVector(VectorXY_t *vector)
 {
     vector->x = 0;
     vector->y = 0;
-    if (lineSensors.CheckFrontLineSensor())
+    if (lineSensors.checkFrontLineSensor())
         vector->y++;
-    if (lineSensors.CheckRearLineSensor())
+    if (lineSensors.checkRearLineSensor())
         vector->y--;
-    if (lineSensors.CheckRightLineSensor())
+    if (lineSensors.checkRightLineSensor())
         vector->x++;
-    if (lineSensors.CheckLeftLineSensor())
+    if (lineSensors.checkLeftLineSensor())
         vector->x--;
 }
 
@@ -397,16 +397,16 @@ void lineProcess2()
     VectorXY_t reactedLineDirecitionVector = {0, 0}; //反応したラインセンサの保存
     int count = 0;
     while (switchObserver.readMainSwitch() && /*digitalReadFast(KDHardwere::Switch1Pin) &&*/ //メインスイッチの確認
-           (lineSensors.CheckFrontLineSensor() ||                                            //---------------------------------
-            lineSensors.CheckRearLineSensor() ||                                             //ラインセンサが一つでも反応しているか
-            lineSensors.CheckRightLineSensor() ||                                            //---------------------------------
-            lineSensors.CheckLeftLineSensor()) &&
+           (lineSensors.checkFrontLineSensor() ||                                            //---------------------------------
+            lineSensors.checkRearLineSensor() ||                                             //ラインセンサが一つでも反応しているか
+            lineSensors.checkRightLineSensor() ||                                            //---------------------------------
+            lineSensors.checkLeftLineSensor()) &&
            count < 100) //---------------------------------
     {
-        const bool front = lineSensors.CheckFrontLineSensor();
-        const bool rear = lineSensors.CheckRearLineSensor();
-        const bool right = lineSensors.CheckRightLineSensor();
-        const bool left = lineSensors.CheckLeftLineSensor();
+        const bool front = lineSensors.checkFrontLineSensor();
+        const bool rear = lineSensors.checkRearLineSensor();
+        const bool right = lineSensors.checkRightLineSensor();
+        const bool left = lineSensors.checkLeftLineSensor();
 
         if (reactedLineDirecitionVector.x == 0 &&
             reactedLineDirecitionVector.y == 0)

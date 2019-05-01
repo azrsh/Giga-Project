@@ -27,9 +27,9 @@ void KDLineSensors::printValue()
     KDDebugUtility::printValueWithTag("Rear", analogRead(KDHardwere::RearLineSensorPin));
     KDDebugUtility::printValueWithTag("Right", analogRead(KDHardwere::RightLineSensorPin));
     KDDebugUtility::printValueWithTag("Left", analogRead(KDHardwere::LeftLineSensorPin));
-    /*KDDebugUtility::printValueWithTag("Front", CheckFrontLineSensor());
-    KDDebugUtility::printValueWithTag("Rear", CheckRearLineSensor());
-    KDDebugUtility::printValueWithTag("Right", CheckRightLineSensor());
-    KDDebugUtility::printValueWithTag("Left", CheckLeftLineSensor());*/
+    /*KDDebugUtility::printValueWithTag("Front", CcheckFrontLineSensor());
+    KDDebugUtility::printValueWithTag("Rear", checkRearLineSensor());
+    KDDebugUtility::printValueWithTag("Right", checkRightLineSensor());
+    KDDebugUtility::printValueWithTag("Left", checkLeftLineSensor());*/
     KDDebugUtility::println();
 }
