@@ -25,7 +25,7 @@ class KDThreeMotors
         //ここでやるべきではない
         static_assert(KDSharedObjects::MaximamMotorPower < 256, "ERROR：KDSharedObjects::MaximamMotorPower（モータ出力の最大値）がpwm出力の最大値を超えています");
 
-        int horizontalMax = max(abs(right), abs(right));
+        int horizontalMax = max(abs(right), abs(left));
         int maxPower = max(horizontalMax, rear);
         if (maxPower > KDSharedObjects::MaximamMotorPower)
         {
