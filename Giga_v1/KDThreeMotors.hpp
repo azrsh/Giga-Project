@@ -1,6 +1,8 @@
 #ifndef KD_THREE_MOTORS_h
 #define KD_THREE_MOTORS_h
 
+#include "KDModeMacros.hpp"
+
 template <class RightMotor, class LeftMotor, class RearMotor>
 class KDThreeMotors
 {
