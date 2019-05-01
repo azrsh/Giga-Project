@@ -4,6 +4,8 @@
 #include "KDMacroUtilities.hpp"
 #include "KDHardwere.hpp"
 
+//未使用
+
 template <uint8_t pin>
 class KDLineSensor
 {
