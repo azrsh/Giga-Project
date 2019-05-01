@@ -37,4 +37,6 @@ void KDHardwere::setupDigitalPins()
     pinMode(Switch2Pin, INPUT);
 
     pinMode(SpeakerPin, OUTPUT);
+
+    pinMode(LEDPin, OUTPUT);
 }

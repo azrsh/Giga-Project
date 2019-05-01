@@ -82,7 +82,6 @@ void setup()
     kicker.init();
     irSensors.init();
 
-    pinMode(KDHardwere::LEDPin, OUTPUT);
     digitalWriteFast(KDHardwere::LEDPin, HIGH);
 
     analogWrite(KDHardwere::LineThreshold, 85);
