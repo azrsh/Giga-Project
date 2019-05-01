@@ -1,36 +1,27 @@
 #include <math.h>
-#include <Wire.h>                       //超音波センサ用サブマイコンとの通信
-#include <FlexiTimer2.h>                //ラインセンサのタイマ割り込み用
-#include <MPU6050_6Axis_MotionApps20.h> //
-#include "KDSharedObjects.hpp"          //共有変数と共有定数の保存
-#include "KDHardwere.hpp"               //ハードウェア依存定数の保存
-#include "KDMoveCtrl.hpp"               //移動制御ライブラリ
-#include "KDIRSensor.hpp"               //IRセンサ制御クラス
-#include "KDUltraSonicSensors.hpp"      //超音波センサ制御クラス、超音波センサ使用不能
-#include "KDKicker.hpp"
-#include "KDLineSensors.hpp"
-#include "KDGyroSensor.hpp"
-#include "KDCatchSensor.hpp"
-#include "KDUIUnitCommunication.hpp"
-#include "KDMath.hpp" //数学系ライブラリ、未実装機能多数
-#include "KDPIDControl.hpp"
-#include "KDThreeMotors.hpp" //テスト用に読み込んでるだけ
-#include "KDDebugUtility.hpp"
-#include "KDInterThreadData.hpp"
-#include "KDSwitchObserver.hpp"
-
-#include "TonePlayer.hpp"
+#include <Wire.h>                    //超音波センサ用サブマイコンとの通信
+#include <FlexiTimer2.h>             //ラインセンサのタイマ割り込み用
+#include "KDMacroUtilities.hpp"      //共通マクロ
+#include "KDDataStructure.hpp"       //共通データ構造
+#include "KDHardwere.hpp"            //ハードウェア依存定数の保存
+#include "KDIRSensor.hpp"            //IRセンサ制御クラス
 #include "KDUltraSonicSensor.hpp"    //
+#include "KDUltraSonicSensors.hpp"   //超音波センサ制御クラス、超音波センサ使用不能
+#include "KDKicker.hpp"              //キッカー制御クラス
+#include "KDLineSensors.hpp"         //ライン読み取りクラス
+#include "KDGyroSensor.hpp"          //ジャイロ読み取りクラス
+#include "KDCatchSensor.hpp"         //捕捉センサ読み取りクラス
+#include "KDUIUnitCommunication.hpp" //UIユニットとの通信用クラス
+#include "KDPIDControl.hpp"          //pid制御クラス、I,D未実装
+#include "KDMotor.hpp"               //モータ単体制御クラス
+#include "KDThreeMotors.hpp"         //三輪モータ制御
+#include "KDMoveLocker.hpp"          //移動ロック用クラス
+#include "KDMoveCtrl.hpp"            //移動制御クラス
+#include "KDDebugUtility.hpp"        //デバック用クラス
+#include "KDInterThreadData.hpp"     //スレッド間通信用クラス
+#include "KDSwitchObserver.hpp"      //スイッチの監視クラス
+#include "TonePlayer.hpp"            //スピーカーによる音楽再生クラス
 #include "Pitches.hpp"
-
-#include "KDMacroUtilities.hpp"
-
-#include "KDConstexprTest.hpp"
-
-#include "KDMotor.hpp"
-#include "KDMoveLocker.hpp"
-
-#include "KDDataStructure.hpp"
 
 static constexpr int16_t DefaultPower = 256;
 

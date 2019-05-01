@@ -3,6 +3,7 @@
 
 #include "KDModeMacros.hpp"
 #include "KDDataStructure.hpp"
+#include "KDSharedObjects.hpp"
 
 template <class RightMotor, class LeftMotor, class RearMotor>
 class KDThreeMotors
