@@ -61,8 +61,16 @@ KDInterThreadData interThreadData = KDInterThreadData();
 //スタート後かのフラグ、スタートダッシュ用、別の方法に変えたい
 bool isStarted = false;
 
-KDMotor<KDHardwere::RightMotorDirectionPin, KDHardwere::RightMotorPwmPin, true> rightMotor(1.0);
+typedef KDMotor<KDHardwere::RightMotorDirectionPin, KDHardwere::RightMotorPwmPin, true> RightMotor;
+typedef KDMotor<KDHardwere::LeftMotorDirectionPin, KDHardwere::LeftMotorPwmPin, true> LeftMotor;
+typedef KDMotor<KDHardwere::RearMotorDirectionPin, KDHardwere::RearMotorPwmPin, false> RearMotor;
+typedef KDThreeMotors<RightMotor, LeftMotor, RearMotor> ThreeMotors;
+RightMotor rightMotor(1.0);
+LeftMotor leftMotor(1.0);
+RearMotor rearMotor(1.0);
+ThreeMotors threeMotors(&rightMotor, &leftMotor, &rearMotor);
 KDMoveLocker moveLocker;
+KDMoveCtrl<ThreeMotors> moveCtrl(&threeMotors, &moveLocker);
 
 void setup()
 {
@@ -74,8 +82,6 @@ void setup()
     gyroSensor.init();
     kicker.init();
     irSensors.init();
-
-    KDMoveCtrl::init(&moveLocker);
 
     pinMode(KDHardwere::LEDPin, OUTPUT);
     digitalWriteFast(KDHardwere::LEDPin, HIGH);
@@ -97,7 +103,7 @@ void loop()
     //スイッチがオフならこのif分以降は実行されない
     if (!switchObserver.readMainSwitch())
     {
-        KDMoveCtrl::moveByLocalDegreeAndPower(0, 0, 0);
+        moveCtrl.moveByLocalDegreeAndPower(0, 0, 0);
         delay(10);
         return;
     }
@@ -108,7 +114,7 @@ void loop()
         //if (switchObserver.readDashSwitch())
         {
             isStarted = true;
-            KDMoveCtrl::moveByLocalDegreeAndPower(0, DefaultPower, 0);
+            moveCtrl.moveByLocalDegreeAndPower(0, DefaultPower, 0);
         }
     }
 
@@ -169,7 +175,7 @@ void loop()
     KDDebugUtility::println();*/
 
     //簡易モータテストコード
-    //KDMoveCtrl::moveByLocalDegreeAndPower(0, DefaultPower, 0);
+    //moveCtrl.moveByLocalDegreeAndPower(0, DefaultPower, 0);
 
     //delay(10);
     //return;
@@ -196,9 +202,9 @@ void loop()
         constexpr int scalingRate = 30;
         baseVector.x = round(ballStatus->deltaRectangularVector.x * scalingRate * filteringRate + baseVector.x * (1 - filteringRate));
         baseVector.y = round(ballStatus->deltaRectangularVector.y * scalingRate * filteringRate + baseVector.y * (1 - filteringRate));
-        KDMoveCtrl::baseVector = baseVector;
-        KDDebugUtility::printValueWithTag("dx", KDMoveCtrl::baseVector.x);
-        KDDebugUtility::printValueWithTag("dy", KDMoveCtrl::baseVector.y);
+        moveCtrl.baseVector = baseVector;
+        KDDebugUtility::printValueWithTag("dx", moveCtrl.baseVector.x);
+        KDDebugUtility::printValueWithTag("dy", moveCtrl.baseVector.y);
         KDDebugUtility::println();
     }
 
@@ -302,7 +308,7 @@ void loop()
     lockMovementByLineVector();
 
     //モータに出力
-    KDMoveCtrl::moveByLocalDegreeAndPower(targetDegrees, power, angularVelocity, isUseBaseVector);
+    moveCtrl.moveByLocalDegreeAndPower(targetDegrees, power, angularVelocity, isUseBaseVector);
     previousMillis = millis();
     delay(10);
 }
@@ -359,13 +365,13 @@ void lineProcess1()
            count < 100) //---------------------------------
     {
         for (int i = 0; i < 10 && !(reactedLineDirecitionVector.x == 0 && reactedLineDirecitionVector.y == 0); i++)
-            KDMoveCtrl::moveByLocalVector2(-(int)reactedLineDirecitionVector.x * DefaultPower, -(int)reactedLineDirecitionVector.y * DefaultPower, 0);
+            moveCtrl.moveByLocalVector2(-(int)reactedLineDirecitionVector.x * DefaultPower, -(int)reactedLineDirecitionVector.y * DefaultPower, 0);
 
         count++;
     }
 
     //if (!digitalReadFast(KDHardwere::Switch1Pin))
-    //    KDMoveCtrl::moveByLocalVector2(0, 0, 0);
+    //    moveCtrl.moveByLocalVector2(0, 0, 0);
 
     reactedLineDirecitionVector = {0, 0};
 }
@@ -427,13 +433,13 @@ void lineProcess2()
         //-------------------------------
 
         for (int i = 0; i < 10; i++)
-            KDMoveCtrl::moveByLocalVector2(-(int)reactedLineDirecitionVector.x * DefaultPower, -(int)reactedLineDirecitionVector.y * DefaultPower, angularVelocity);
+            moveCtrl.moveByLocalVector2(-(int)reactedLineDirecitionVector.x * DefaultPower, -(int)reactedLineDirecitionVector.y * DefaultPower, angularVelocity);
 
         count++;
     }
 
     //if (!digitalReadFast(KDHardwere::Switch1Pin))
-    //    KDMoveCtrl::moveByLocalVector2(0, 0, 0);
+    //    moveCtrl.moveByLocalVector2(0, 0, 0);
 
     reactedLineDirecitionVector = {0, 0};
 }
