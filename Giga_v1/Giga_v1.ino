@@ -1,5 +1,3 @@
-#include <math.h>
-#include <Wire.h>                    //超音波センサ用サブマイコンとの通信
 #include <FlexiTimer2.h>             //ラインセンサのタイマ割り込み用
 #include "KDMacroUtilities.hpp"      //共通マクロ
 #include "KDDataStructure.hpp"       //共通データ構造
