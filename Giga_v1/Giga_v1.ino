@@ -24,11 +24,11 @@
 static constexpr int16_t DefaultPower = 256;
 
 //センサ制御クラスのインスタンス
-KDIRSensor irSensors = KDIRSensor(&Serial4);
-KDKicker kicker = KDKicker();
-KDLineSensors lineSensors = KDLineSensors();
-KDGyroSensor gyroSensor = KDGyroSensor(&Serial5);
-KDCatchSensor catchSensor = KDCatchSensor();
+KDIRSensor irSensors(&Serial4);
+KDKicker kicker;
+KDLineSensors lineSensors;
+KDGyroSensor gyroSensor(&Serial5);
+KDCatchSensor catchSensor;
 
 KDUltraSonicSensor frontUSSensor(KDHardwere::FrontUSSensorPin, 0.3);
 KDUltraSonicSensor rearUSSensor(KDHardwere::RearUSSensorPin, 0.3);
@@ -36,11 +36,11 @@ KDUltraSonicSensor rightUSSensor(KDHardwere::RightUSSensorPin, 0.3);
 KDUltraSonicSensor leftUSSensor(KDHardwere::LeftUSSensorPin, 0.3);
 KDUltraSonicSensors usSensors = KDUltraSonicSensors(&frontUSSensor, &rearUSSensor, &rightUSSensor, &leftUSSensor);
 
-KDUIUnitCommunication uiUnitCommunication = KDUIUnitCommunication(&Serial2);
+KDUIUnitCommunication uiUnitCommunication(&Serial2);
 int melody[1] = {Pitches::NoteC4};
 int noteDurations[1] = {4};
-TonePlayer tonePlayer = TonePlayer(1, melody, noteDurations);
-KDSwitchObserver switchObserver = KDSwitchObserver(&lineSensors, &tonePlayer);
+TonePlayer tonePlayer(1, melody, noteDurations);
+KDSwitchObserver switchObserver(&lineSensors, &tonePlayer);
 
 //方位補正用のPID制御インスタンスだが、P制御しか実装してない
 //KP=0.071~0.072の範囲
@@ -50,7 +50,7 @@ KDSwitchObserver switchObserver = KDSwitchObserver(&lineSensors, &tonePlayer);
 static constexpr float GyroPidKP = -0.08;
 static constexpr float GyroPidKI = -GyroPidKP / 14.5;
 static constexpr float GyroPidKD = -GyroPidKP * 14.5;
-KDPIDControl pidControl = KDPIDControl(GyroPidKP, GyroPidKI, GyroPidKD, -7.0f, 7.0f);
+KDPIDControl pidControl(GyroPidKP, GyroPidKI, GyroPidKD, -7.0f, 7.0f);
 
 //スレッド間のデータ共有用インスタンス
 KDInterThreadData interThreadData = KDInterThreadData();
