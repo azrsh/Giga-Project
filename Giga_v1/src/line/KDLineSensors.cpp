@@ -23,6 +23,9 @@ void KDLineSensors::setThreshold()
 
 void KDLineSensors::printValue()
 {
+    KDDebugUtility::printValueWithTag("analog", analogRead(KDHardwere::LineAnalogPin));
+    analogWrite(KDHardwere::LineThreshold, 256);
+
     KDDebugUtility::printValueWithTag("Front", analogRead(KDHardwere::FrontLineSensorPin));
     KDDebugUtility::printValueWithTag("Rear", analogRead(KDHardwere::RearLineSensorPin));
     KDDebugUtility::printValueWithTag("Right", analogRead(KDHardwere::RightLineSensorPin));

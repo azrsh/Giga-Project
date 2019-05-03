@@ -88,9 +88,6 @@ BallStatus_t *KDIRSensor::read()
 
 void KDIRSensor::printValue()
 {
-    KDDebugUtility::printValueWithTag("analog", analogRead(KDHardwere::LineAnalogPin));
-    analogWrite(KDHardwere::LineThreshold, 256);
-
     BallStatus_t *ballStatus = read();
 
     VectorDD_t polarVector = ballStatus->polarVector;
