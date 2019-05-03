@@ -61,7 +61,8 @@ void onSubSwitch()
 {
     //setWhite
 }
-KDSwitchObserver<KDHardwere::Switch1Pin, KDHardwere::Switch2Pin> switchObserver(onMainSwitch, onSubSwitch);
+KDSwitchObserver<KDHardwere::Switch1Pin> mainSwitchObserver(onMainSwitch);
+KDSwitchObserver<KDHardwere::Switch2Pin> subSwitchObserver(onSubSwitch);
 
 //方位補正用のPID制御インスタンスだが、P制御しか実装してない
 //KP=0.071~0.072の範囲
@@ -114,11 +115,11 @@ void setup()
 void loop()
 {
     //スイッチのテスト
-    //switchObserver.printValue();
+    //mainSwitchObserver.printValue();
     //KDDebugUtility::printValueWithTag("switch", uiUnitCommunication.read());
 
     //スイッチがオフならこのif分以降は実行されない
-    if (!switchObserver.readMainSwitch())
+    if (!mainSwitchObserver.read())
     {
         moveCtrl.moveByLocalDegreeAndPower(0, 0, 0);
         delay(10);
@@ -128,7 +129,7 @@ void loop()
     //スタートダッシュスイッチ
     if (!isStarted)
     {
-        //if (switchObserver.readDashSwitch())
+        //if (subSwitchObserver.read())
         {
             isStarted = true;
             moveCtrl.moveByLocalDegreeAndPower(0, DefaultPower, 0);
@@ -373,7 +374,7 @@ void lineProcess1()
     interThreadData.push(reactedLineDirecitionVector);
 
     int count = 0;
-    while (switchObserver.readMainSwitch() &&     //メインスイッチの確認
+    while (mainSwitchObserver.read() &&           //メインスイッチの確認
            (lineSensors.checkFrontLineSensor() || //---------------------------------
             lineSensors.checkRearLineSensor() ||  //ラインセンサが一つでも反応しているか
             lineSensors.checkRightLineSensor() || //---------------------------------
@@ -411,10 +412,10 @@ void lineProcess2()
 {
     VectorXY_t reactedLineDirecitionVector = {0, 0}; //反応したラインセンサの保存
     int count = 0;
-    while (switchObserver.readMainSwitch() && /*digitalReadFast(KDHardwere::Switch1Pin) &&*/ //メインスイッチの確認
-           (lineSensors.checkFrontLineSensor() ||                                            //---------------------------------
-            lineSensors.checkRearLineSensor() ||                                             //ラインセンサが一つでも反応しているか
-            lineSensors.checkRightLineSensor() ||                                            //---------------------------------
+    while (mainSwitchObserver.read() &&           //メインスイッチの確認
+           (lineSensors.checkFrontLineSensor() || //---------------------------------
+            lineSensors.checkRearLineSensor() ||  //ラインセンサが一つでも反応しているか
+            lineSensors.checkRightLineSensor() || //---------------------------------
             lineSensors.checkLeftLineSensor()) &&
            count < 100) //---------------------------------
     {
