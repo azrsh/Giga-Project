@@ -1,11 +1,11 @@
 #ifndef KD_MOVE_CTRL_h
 #define KD_MOVE_CTRL_h
 
-#include "KDMacroUtilities.hpp"
-#include "KDSharedObjects.hpp"
-#include "KDDataStructure.hpp"
+#include "../utilities/KDMacroUtilities.hpp"
+#include "../KDSharedObjects.hpp"
+#include "../utilities/KDDataStructure.hpp"
+#include "../utilities/KDMath.hpp"
 #include "KDMoveLocker.hpp"
-#include "KDMath.hpp"
 
 template <class ThreeMotors>
 class KDMoveCtrl

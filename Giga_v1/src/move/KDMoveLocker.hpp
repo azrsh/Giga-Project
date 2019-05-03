@@ -1,7 +1,7 @@
 #ifndef KD_MOVE_LOCKER_h
 #define KD_MOVE_LOCKER_h
 
-#include "KDMacroUtilities.hpp"
+#include "../utilities/KDMacroUtilities.hpp"
 
 class KDMoveLocker
 {

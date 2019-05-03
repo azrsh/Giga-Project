@@ -1,8 +1,8 @@
 #ifndef KD_LINE_SENSOR_h
 #define KD_LINE_SENSOR_h
 
-#include "KDMacroUtilities.hpp"
-#include "KDHardwere.hpp"
+#include "../utilities/KDMacroUtilities.hpp"
+#include "../hardware/KDHardwere.hpp"
 
 //未使用
 

@@ -1,9 +1,9 @@
 #ifndef KD_THREE_MOTORS_h
 #define KD_THREE_MOTORS_h
 
-#include "KDModeMacros.hpp"
-#include "KDDataStructure.hpp"
-#include "KDSharedObjects.hpp"
+#include "../utilities/KDModeMacros.hpp"
+#include "../utilities/KDDataStructure.hpp"
+#include "../KDSharedObjects.hpp"
 
 template <class RightMotor, class LeftMotor, class RearMotor>
 class KDThreeMotors

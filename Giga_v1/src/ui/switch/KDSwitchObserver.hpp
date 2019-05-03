@@ -1,6 +1,7 @@
 #ifndef KD_SWITCH_OBSERVER_h
 #define KD_SWITCH_OBSERVER_h
 
+class KDLineSensors;
 class TonePlayer;
 
 class KDSwitchObserver

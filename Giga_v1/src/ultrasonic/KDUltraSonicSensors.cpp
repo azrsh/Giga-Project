@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <Wire.h>
-#include "KDHardwere.hpp"
-#include "KDDebugUtility.hpp"
+#include "../hardware/KDHardwere.hpp"
+#include "../utilities/KDDebugUtility.hpp"
 #include "KDUltraSonicSensor.hpp"
 #include "KDUltraSonicSensors.hpp"
 

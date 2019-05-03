@@ -1,7 +1,7 @@
 #include <Arduino.h>
-#include "KDDebugUtility.hpp"
 #include "KDIRSensor.hpp"
-#include "KDHardwere.hpp"
+#include "../utilities/KDDebugUtility.hpp"
+#include "../hardware/KDHardwere.hpp"
 
 //後で過去のボールの位置とかも見るようにする？
 

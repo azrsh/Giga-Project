@@ -1,8 +1,8 @@
 #ifndef KD_LINE_SENSORS_h
 #define KD_LINE_SENSORS_h
 
-#include "KDMacroUtilities.hpp"
-#include "KDHardwere.hpp"
+#include "../hardware/KDHardwere.hpp"
+#include "../utilities/KDMacroUtilities.hpp"
 
 class KDLineSensors
 {

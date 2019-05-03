@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include <FlexiTimer2.h> //ラインセンサのタイマ割り込み用
 #include "KDKicker.hpp"
-#include "KDHardwere.hpp"
-#include "KDDebugUtility.hpp"
+#include "../hardware/KDHardwere.hpp"
+#include "../utilities/KDDebugUtility.hpp"
 
 //pinModeの初期化を各クラスに分散したらこっちに移動したい
 /*void KDKicker::KDKicker()

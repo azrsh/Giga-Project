@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "KDDataStructure.hpp"
+#include "../utilities/KDDataStructure.hpp"
 #include "KDInterThreadData.hpp"
 
 void KDInterThreadData::read(VectorXY_t *vector, unsigned long *timeStamp)

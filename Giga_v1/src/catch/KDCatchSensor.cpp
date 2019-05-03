@@ -1,7 +1,7 @@
 #include <Arduino.h>
-#include "KDHardwere.hpp"
-#include "KDDebugUtility.hpp"
 #include "KDCatchSensor.hpp"
+#include "../hardware/KDHardwere.hpp"
+#include "../utilities/KDDebugUtility.hpp"
 
 void KDCatchSensor::printValue()
 {

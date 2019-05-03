@@ -1,7 +1,8 @@
 #ifndef KD_ULTRA_SONIC_SENSOR_h
 #define KD_ULTRA_SONIC_SENSOR_h
 
-#include "KDMacroUtilities.hpp"
+#include "../hardware/KDHardwere.hpp"
+#include "../utilities/KDMacroUtilities.hpp"
 
 class KDUltraSonicSensor
 {

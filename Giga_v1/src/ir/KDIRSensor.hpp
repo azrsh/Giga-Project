@@ -1,6 +1,8 @@
 #ifndef KD_IR_SENSOR_h
 #define KD_IR_SENSOR_h
 
+#include "../utilities/KDDataStructure.hpp"
+
 typedef struct
 {
     VectorDD_t polarVector = {0, 0};

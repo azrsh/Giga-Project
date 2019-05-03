@@ -1,25 +1,25 @@
-#include <FlexiTimer2.h>             //ラインセンサのタイマ割り込み用
-#include "KDMacroUtilities.hpp"      //共通マクロ
-#include "KDDataStructure.hpp"       //共通データ構造
-#include "KDHardwere.hpp"            //ハードウェア依存定数の保存
-#include "KDIRSensor.hpp"            //IRセンサ制御クラス
-#include "KDUltraSonicSensor.hpp"    //
-#include "KDUltraSonicSensors.hpp"   //超音波センサ制御クラス、超音波センサ使用不能
-#include "KDKicker.hpp"              //キッカー制御クラス
-#include "KDLineSensors.hpp"         //ライン読み取りクラス
-#include "KDGyroSensor.hpp"          //ジャイロ読み取りクラス
-#include "KDCatchSensor.hpp"         //捕捉センサ読み取りクラス
-#include "KDUIUnitCommunication.hpp" //UIユニットとの通信用クラス
-#include "KDPIDControl.hpp"          //pid制御クラス、I,D未実装
-#include "KDMotor.hpp"               //モータ単体制御クラス
-#include "KDThreeMotors.hpp"         //三輪モータ制御
-#include "KDMoveLocker.hpp"          //移動ロック用クラス
-#include "KDMoveCtrl.hpp"            //移動制御クラス
-#include "KDDebugUtility.hpp"        //デバック用クラス
-#include "KDInterThreadData.hpp"     //スレッド間通信用クラス
-#include "KDSwitchObserver.hpp"      //スイッチの監視クラス
-#include "TonePlayer.hpp"            //スピーカーによる音楽再生クラス
-#include "Pitches.hpp"
+#include <FlexiTimer2.h>                          //ラインセンサのタイマ割り込み用
+#include "src/utilities/KDMacroUtilities.hpp"     //共通マクロ
+#include "src/utilities/KDDataStructure.hpp"      //共通データ構造
+#include "src/hardware/KDHardwere.hpp"            //ハードウェア依存定数の保存
+#include "src/ir/KDIRSensor.hpp"                  //IRセンサ制御クラス
+#include "src/ultrasonic/KDUltraSonicSensor.hpp"  //
+#include "src/ultrasonic/KDUltraSonicSensors.hpp" //超音波センサ制御クラス、超音波センサ使用不能
+#include "src/kicker/KDKicker.hpp"                //キッカー制御クラス
+#include "src/line/KDLineSensors.hpp"             //ライン読み取りクラス
+#include "src/gyro/KDGyroSensor.hpp"              //ジャイロ読み取りクラス
+#include "src/catch/KDCatchSensor.hpp"            //捕捉センサ読み取りクラス
+#include "src/ui/KDUIUnitCommunication.hpp"       //UIユニットとの通信用クラス
+#include "src/pid/KDPIDControl.hpp"               //pid制御クラス、I,D未実装
+#include "src/move/KDMotor.hpp"                   //モータ単体制御クラス
+#include "src/move/KDThreeMotors.hpp"             //三輪モータ制御
+#include "src/move/KDMoveLocker.hpp"              //移動ロック用クラス
+#include "src/move/KDMoveCtrl.hpp"                //移動制御クラス
+#include "src/utilities/KDDebugUtility.hpp"       //デバック用クラス
+#include "src/thread/KDInterThreadData.hpp"       //スレッド間通信用クラス
+#include "src/ui/switch/KDSwitchObserver.hpp"     //スイッチの監視クラス
+#include "src/sound/TonePlayer.hpp"               //スピーカーによる音楽再生クラス
+#include "src/sound/Pitches.hpp"
 
 static constexpr int16_t DefaultPower = 256;
 

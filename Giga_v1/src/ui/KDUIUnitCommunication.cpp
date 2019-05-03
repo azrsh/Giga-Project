@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "KDUIUnitCommunication.hpp"
-#include "KDHardwere.hpp"
-#include "KDDebugUtility.hpp"
+#include "../hardware/KDHardwere.hpp"
+#include "../utilities/KDDebugUtility.hpp"
 
 void KDUIUnitCommunication::init()
 {

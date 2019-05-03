@@ -1,9 +1,9 @@
 #include <Arduino.h>
-#include "KDLineSensors.hpp"
-#include "KDHardwere.hpp"
-#include "KDDebugUtility.hpp"
 #include "KDSwitchObserver.hpp"
-#include "TonePlayer.hpp"
+#include "../../line/KDLineSensors.hpp"
+#include "../../hardware/KDHardwere.hpp"
+#include "../../utilities/KDDebugUtility.hpp"
+#include "../../sound/TonePlayer.hpp"
 
 void KDSwitchObserver::reset()
 {

@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include "KDHardwere.hpp"
-#include "KDDebugUtility.hpp"
+#include "../hardware/KDHardwere.hpp"
+#include "../utilities/KDDebugUtility.hpp"
 #include "KDLineSensors.hpp"
 
 void KDLineSensors::setWhiteValue()
