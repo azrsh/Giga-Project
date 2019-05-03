@@ -28,7 +28,7 @@ KDIRSensor irSensors(&Serial4);
 KDKicker kicker;
 KDLineSensors lineSensors;
 KDGyroSensor gyroSensor(&Serial5);
-KDCatchSensor catchSensor;
+KDCatchSensor catchSensor(KDHardwere::CatchSensorPin);
 
 KDUltraSonicSensor frontUSSensor(KDHardwere::FrontUSSensorPin, 0.3);
 KDUltraSonicSensor rearUSSensor(KDHardwere::RearUSSensorPin, 0.3);

@@ -1,13 +1,16 @@
 #ifndef KD_CATCH_SENSORS_h
 #define KD_CATCH_SENSORS_h
 
-#include "../hardware/KDHardwere.hpp"
 #include "../utilities/KDMacroUtilities.hpp"
 
 class KDCatchSensor
 {
+  private:
+    uint8_t pin;
+
   public:
-    INLINE int read() { return analogRead(KDHardwere::CatchSensorPin); }
+    KDCatchSensor(uint8_t pin) : pin(pin){};
+    INLINE int read() { return analogRead(pin); }
     void printValue();
 };
 
