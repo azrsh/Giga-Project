@@ -6,6 +6,7 @@
 #include "src/ultrasonic/KDUltraSonicSensor.hpp"  //
 #include "src/ultrasonic/KDUltraSonicSensors.hpp" //超音波センサ制御クラス、超音波センサ使用不能
 #include "src/kicker/KDKicker.hpp"                //キッカー制御クラス
+#include "src/line/KDLineSensor.hpp"              //ライン読み取りクラス
 #include "src/line/KDLineSensors.hpp"             //ライン読み取りクラス
 #include "src/gyro/KDGyroSensor.hpp"              //ジャイロ読み取りクラス
 #include "src/catch/KDCatchSensor.hpp"            //捕捉センサ読み取りクラス
@@ -26,7 +27,6 @@ static constexpr int16_t DefaultPower = 256;
 //センサ制御クラスのインスタンス
 KDIRSensor irSensors(&Serial4);
 KDKicker<KDHardwere::KickerPin> kicker;
-KDLineSensors lineSensors;
 KDGyroSensor gyroSensor(&Serial5);
 KDCatchSensor catchSensor(KDHardwere::CatchSensorPin);
 
@@ -36,11 +36,22 @@ KDUltraSonicSensor rightUSSensor(KDHardwere::RightUSSensorPin, 0.3);
 KDUltraSonicSensor leftUSSensor(KDHardwere::LeftUSSensorPin, 0.3);
 KDUltraSonicSensors usSensors = KDUltraSonicSensors(&frontUSSensor, &rearUSSensor, &rightUSSensor, &leftUSSensor);
 
+typedef KDLineSensor<KDHardwere::FrontLineSensorPin> FrontLineSensor;
+typedef KDLineSensor<KDHardwere::RearLineSensorPin> RearLineSensor;
+typedef KDLineSensor<KDHardwere::RightLineSensorPin> RightLineSensor;
+typedef KDLineSensor<KDHardwere::LeftLineSensorPin> LeftLineSensor;
+typedef KDLineSensors<FrontLineSensor, RearLineSensor, RightLineSensor, LeftLineSensor> LineSensors;
+FrontLineSensor frontLineSensor;
+RearLineSensor rearLineSensor;
+RightLineSensor rightLineSensor;
+LeftLineSensor leftLineSensor;
+LineSensors lineSensors(&frontLineSensor, &rearLineSensor, &rightLineSensor, &leftLineSensor, KDHardwere::LineAnalogPin, KDHardwere::LineThreshold);
+
 KDUIUnitCommunication uiUnitCommunication(&Serial2);
 int melody[1] = {Pitches::NoteC4};
 int noteDurations[1] = {4};
 TonePlayer tonePlayer(1, melody, noteDurations);
-KDSwitchObserver<KDHardwere::Switch1Pin, KDHardwere::Switch2Pin> switchObserver(&lineSensors, &tonePlayer);
+KDSwitchObserver<KDHardwere::Switch1Pin, KDHardwere::Switch2Pin> switchObserver(&tonePlayer);
 
 //方位補正用のPID制御インスタンスだが、P制御しか実装してない
 //KP=0.071~0.072の範囲

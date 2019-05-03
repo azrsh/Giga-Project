@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 #include "KDSwitchObserver.hpp"
-#include "../../line/KDLineSensors.hpp"
 #include "../../utilities/KDDebugUtility.hpp"
 #include "../../sound/TonePlayer.hpp"
 
@@ -15,12 +14,11 @@ class KDSwitchObserver
     bool previousDashSwitch = false;
     bool mainSwitch = false;
     bool dashSwitch = false;
-    KDLineSensors *lineSensorsInstance;
     TonePlayer *tonePlayerInstance;
 
   public:
-    KDSwitchObserver(KDLineSensors *lineSensors, TonePlayer *tonePlayer)
-        : lineSensorsInstance(lineSensors), tonePlayerInstance(tonePlayer){};
+    KDSwitchObserver(TonePlayer *tonePlayer)
+        : tonePlayerInstance(tonePlayer){};
     void reset(){};
     bool readMainSwitch()
     {
@@ -30,8 +28,8 @@ class KDSwitchObserver
         if (previousMainSwitch && !switch1State)
         {
             mainSwitch = !mainSwitch;
-            lineSensorsInstance->setGreenValue();
-            lineSensorsInstance->setThreshold();
+            //lineSensorsInstance->setGreenValue();
+            //lineSensorsInstance->setThreshold();
             tonePlayerInstance->play();
         }
         /*if (!previousMainSwitch && switch1State)
@@ -59,7 +57,7 @@ class KDSwitchObserver
         if (previousDashSwitch && !switch2State)
         {
             dashSwitch = !dashSwitch;
-            lineSensorsInstance->setWhiteValue();
+            //lineSensorsInstance->setWhiteValue();
         }
 
         previousDashSwitch = switch2State;
