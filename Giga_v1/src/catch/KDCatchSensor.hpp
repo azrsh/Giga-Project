@@ -6,7 +6,7 @@
 class KDCatchSensor
 {
   private:
-    uint8_t pin;
+    const uint8_t pin;
 
   public:
     KDCatchSensor(uint8_t pin) : pin(pin){};
