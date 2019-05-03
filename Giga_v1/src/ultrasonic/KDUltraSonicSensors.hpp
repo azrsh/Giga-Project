@@ -5,7 +5,7 @@
 
 class KDUltraSonicSensor;
 
-enum FieldArea
+enum class FieldArea
 {
     None = -1,
     CenterForward = 0,
@@ -23,13 +23,13 @@ class KDUltraSonicSensors
     KDUltraSonicSensor *rearSensor;
     KDUltraSonicSensor *rightSensor;
     KDUltraSonicSensor *leftSensor;
-    enum FieldArea currentArea;
+    FieldArea currentArea = FieldArea::None;
 
   public:
     KDUltraSonicSensors(KDUltraSonicSensor *frontSensor, KDUltraSonicSensor *rearSensor, KDUltraSonicSensor *rightSensor, KDUltraSonicSensor *leftSensor)
         : frontSensor(frontSensor), rearSensor(rearSensor), rightSensor(rightSensor), leftSensor(leftSensor) {}
     void update();
-    enum FieldArea getCurrentArea();
+    FieldArea getCurrentArea();
     int getFrontDistance();
     int getRearDistance();
     int getRightDistance();

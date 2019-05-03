@@ -17,7 +17,7 @@ void KDUltraSonicSensors::update()
     }
 }
 
-enum FieldArea KDUltraSonicSensors::getCurrentArea()
+FieldArea KDUltraSonicSensors::getCurrentArea()
 {
     return currentArea;
 }
