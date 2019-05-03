@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include "KDUIUnitCommunication.hpp"
-#include "../hardware/KDHardwere.hpp"
 #include "../utilities/KDDebugUtility.hpp"
 
 void KDUIUnitCommunication::init()
@@ -8,12 +7,7 @@ void KDUIUnitCommunication::init()
     _serialInstance->begin(11520);
 }
 
-void KDUIUnitCommunication::reset()
-{
-    /*digitalWriteFast(KDHardwere::GyroResetPin, HIGH);
-    delay(10);
-    digitalWriteFast(KDHardwere::GyroResetPin, LOW);*/
-}
+void KDUIUnitCommunication::reset() {}
 
 int KDUIUnitCommunication::read()
 {

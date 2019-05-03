@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include "KDIRSensor.hpp"
 #include "../utilities/KDDebugUtility.hpp"
-#include "../hardware/KDHardwere.hpp"
 
 //後で過去のボールの位置とかも見るようにする？
 
@@ -22,7 +21,7 @@ BallStatus_t *KDIRSensor::read()
 
     byte radiusLow, radiusHigh, thetaLow, thetaHigh, xHigh, xLow, yHigh, yLow;
     //int count = 0; //上限回数の設定
-    while (_serialInstance->available() >= dataSize /* && count < 10 && digitalReadFast(KDHardwere::Switch1Pin)*/)
+    while (_serialInstance->available() >= dataSize)
     {
         char header = _serialInstance->read();
         if (header == 'B')
