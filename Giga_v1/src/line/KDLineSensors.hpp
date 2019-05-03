@@ -8,10 +8,10 @@ template <class FrontLineSensor, class RearLineSensor, class RightLineSensor, cl
 class KDLineSensors
 {
   private:
-    const FrontLineSensor *frontSensor;
-    const RearLineSensor *rearSensor;
-    const RightLineSensor *rightSensor;
-    const LeftLineSensor *leftSensor;
+    FrontLineSensor *frontSensor;
+    RearLineSensor *rearSensor;
+    RightLineSensor *rightSensor;
+    LeftLineSensor *leftSensor;
     const uint8_t analogPin;
     const uint8_t thresholdPin;
     int whiteValue = 0;
