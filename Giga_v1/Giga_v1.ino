@@ -40,7 +40,7 @@ KDUIUnitCommunication uiUnitCommunication(&Serial2);
 int melody[1] = {Pitches::NoteC4};
 int noteDurations[1] = {4};
 TonePlayer tonePlayer(1, melody, noteDurations);
-KDSwitchObserver switchObserver(&lineSensors, &tonePlayer);
+KDSwitchObserver<KDHardwere::Switch1Pin, KDHardwere::Switch2Pin> switchObserver(&lineSensors, &tonePlayer);
 
 //方位補正用のPID制御インスタンスだが、P制御しか実装してない
 //KP=0.071~0.072の範囲
