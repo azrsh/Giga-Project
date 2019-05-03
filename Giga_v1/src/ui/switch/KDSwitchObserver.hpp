@@ -11,10 +11,10 @@ class KDSwitchObserver
   private:
     bool previousSwitch = false;
     bool switchState = false;
-    const void (*onSwitch)();
+    void (*onSwitch)(void);
 
   public:
-    KDSwitchObserver(const void (*onSwitch)()) : onSwitch(onSwitch){};
+    KDSwitchObserver(void (*onSwitch)(void)) : onSwitch(onSwitch){};
     void reset()
     {
         previousSwitch = false;
