@@ -25,7 +25,7 @@ static constexpr int16_t DefaultPower = 256;
 
 //センサ制御クラスのインスタンス
 KDIRSensor irSensors(&Serial4);
-KDKicker kicker;
+KDKicker<KDHardwere::KickerPin> kicker;
 KDLineSensors lineSensors;
 KDGyroSensor gyroSensor(&Serial5);
 KDCatchSensor catchSensor(KDHardwere::CatchSensorPin);
