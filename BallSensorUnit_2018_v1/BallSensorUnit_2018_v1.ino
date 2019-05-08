@@ -5,6 +5,7 @@
 #include "VectorXYCalculator.hpp"
 #include "VectorRTCalculator.hpp"
 #include "PulseWidthLowPassFilter.hpp"
+#include "PulseWidthPrinter.hpp"
 
 constexpr unsigned long Baud = 115200;
 
@@ -13,6 +14,8 @@ VectorXYCalculator<IRSensorData::NumberOfBallSensors, IRSensorData::UnitVectorX,
 VectorRTCalculator vectorRTCalculator;
 
 PulseWidthLowPassFilter<IRSensorData::NumberOfBallSensors> pulseWidthLowPassFilter(0.05);
+
+PulseWidthPrinter<IRSensorData::NumberOfBallSensors> pulseWidthPrinter(&Serial);
 
 float *pulseWidth;
 
@@ -62,7 +65,7 @@ void loop()
         //printVectorRTIntBySerial(vectorRTInt, deltaVectorXYInt);
         //Serial.println((bool)digitalReadFast(10));
         //Serial.println(pulseIn(10, LOW, 833));
-        //printRawData();
+        //pulseWidthPrinter.print(pulseWidth);
     }
 }
 
@@ -102,15 +105,5 @@ void printVectorRTIntBySerial(vectorRTInt_t vectorRT, vectorXYInt_t vectorXY)
     Serial.print(x);
     Serial.print("    y : ");
     Serial.print(y);
-    Serial.println();
-}
-
-void printRawData()
-{
-    for (int i = 0; i < IRSensorData::NumberOfBallSensors; i++)
-    {
-        Serial.print(pulseWidth[i]);
-        Serial.print("    ");
-    }
     Serial.println();
 }
