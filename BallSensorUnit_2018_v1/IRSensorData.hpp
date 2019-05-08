@@ -1,9 +1,6 @@
 #ifndef IR_SENSOR_CTRL
 #define IR_SENSOR_CTRL
 
-//#include <Arduino.h>
-//#include <digitalWriteFast.h>
-
 //センサの状態を格納する型・変数の定義
 typedef struct
 {
@@ -11,34 +8,6 @@ typedef struct
     int maxPulseWidth;   // 最大のセンサ値
     int maxSensorNumber; // 最大の値を観測したセンサの番号
 } sensorInfo_t;
-
-//直交座標系ベクトルの型・変数の定義
-typedef struct
-{
-    float x;
-    float y;
-} vectorXY_t;
-
-//直交座標系ベクトルのInt版の型・変数の定義
-typedef struct
-{
-    int x;
-    int y;
-} vectorXYInt_t;
-
-//極座標系ベクトルの型・変数の定義
-typedef struct
-{
-    float radius;
-    float theta;
-} vectorRT_t;
-
-//極座標系ベクトルのInt版の型・変数の定義
-typedef struct
-{
-    int radius;
-    int theta;
-} vectorRTInt_t;
 
 class IRSensorData
 {

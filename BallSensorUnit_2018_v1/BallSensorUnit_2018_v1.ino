@@ -1,5 +1,6 @@
 #include <math.h>
 #include <digitalWriteFast.h>
+#include "VectorStruct.hpp"
 #include "IRSensorData.hpp"
 #include "PulseWidthReader.hpp"
 #include "VectorXYCalculator.hpp"
