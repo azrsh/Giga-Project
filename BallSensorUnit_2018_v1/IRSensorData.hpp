@@ -40,7 +40,7 @@ typedef struct
     int theta;
 } vectorRTInt_t;
 
-class IRSensorCtrl
+class IRSensorData
 {
   public:
     //---------ハード依存変数---------
@@ -48,54 +48,6 @@ class IRSensorCtrl
     static constexpr uint8_t NumberOfBallSensors = 12;
     //-------------------------------
 
-    void SetupSensors()
-    {
-        for (int i = 0; i < NumberOfBallSensors; i++)
-            pinMode(BallSensorPins[i], INPUT);
-    }
-
-    bool GetSensorValue(uint8_t index)
-    {
-        switch (index)
-        {
-        case 0:
-            return digitalReadFast(BallSensorPins[0]);
-        case 1:
-            return digitalReadFast(BallSensorPins[1]);
-        case 2:
-            return digitalReadFast(BallSensorPins[2]);
-        case 3:
-            return digitalReadFast(BallSensorPins[3]);
-        case 4:
-            return digitalReadFast(BallSensorPins[4]);
-        case 5:
-            return digitalReadFast(BallSensorPins[5]);
-        case 6:
-            return digitalReadFast(BallSensorPins[6]);
-        case 7:
-            return digitalReadFast(BallSensorPins[7]);
-        case 8:
-            return digitalReadFast(BallSensorPins[8]);
-        case 9:
-            return digitalReadFast(BallSensorPins[9]);
-        case 10:
-            return digitalReadFast(BallSensorPins[10]);
-        case 11:
-            return digitalReadFast(BallSensorPins[11]);
-        }
-    }
-
-    //センサの状態を格納する型
-    //すべてのセンサのパルス幅を取得
-    sensorInfo_t GetAllSensorPulseWidth(float pulseWidth[NumberOfBallSensors]);
-
-    //パルス幅から直交座標系ベクトルに変換
-    vectorXY_t CaliculateVectorXYFromPulseWidth(float *pulseWidth) const;
-
-    //直交座標系ベクトルを極座標系ベクトルに変換
-    vectorRT_t CaliculateVectorRTfromVectorXY(vectorXY_t *vectorXY_p) const;
-
-  private:
     //公式ボールのMode Aでのパルスの周期(833us)
     //https://www.elekit.co.jp/pdf/RCJ-05%20waveform_j.pdf
     static constexpr uint16_t IRBallWaveformModeA = 833;

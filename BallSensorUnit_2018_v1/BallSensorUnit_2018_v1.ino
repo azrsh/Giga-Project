@@ -1,38 +1,42 @@
 #include <math.h>
 #include <digitalWriteFast.h>
-#include "IRSensorCtrl.hpp"
+#include "IRSensorData.hpp"
+#include "PulseWidthReader.hpp"
+#include "VectorXYCalculator.hpp"
+#include "VectorRTCalculator.hpp"
 
 constexpr unsigned long Baud = 115200;
 
-IRSensorCtrl irSensorCtrl = IRSensorCtrl();
+PulseWidthReader<IRSensorData::NumberOfBallSensors, IRSensorData::BallSensorPins> pulseWidthReader(IRSensorData::IRBallWaveformModeA, 2.0);
+VectorXYCalculator<IRSensorData::NumberOfBallSensors, IRSensorData::UnitVectorX, IRSensorData::UnitVectorY> vectorXYCalculator;
+VectorRTCalculator vectorRTCalculator;
 
-float pulseWidth[IRSensorCtrl::NumberOfBallSensors];
+float pulseWidth[IRSensorData::NumberOfBallSensors];
 
 void setup()
 {
     Serial.begin(Baud);
 
     //センサpinのpuMode設定
-    irSensorCtrl.SetupSensors();
+    pulseWidthReader.setupPins();
 }
 
 void loop()
 {
     static unsigned long time_ms = 0;
 
-    float currentPulseWidth[IRSensorCtrl::NumberOfBallSensors];                       // パルス幅を格納する変数
-    sensorInfo_t sensorInfo = irSensorCtrl.GetAllSensorPulseWidth(currentPulseWidth); // 実験用の測定データ ベクトルのみ使う場合は無視することも可能
+    const float *currentPulseWidth = pulseWidthReader.read(); // IRセンサから読み出し
 
     //フィルタリング
     constexpr float Rate = 0.05;
-    for (int i = 0; i < IRSensorCtrl::NumberOfBallSensors; i++)
+    for (int i = 0; i < IRSensorData::NumberOfBallSensors; i++)
     {
         pulseWidth[i] = currentPulseWidth[i] * Rate + pulseWidth[i] * (1 - Rate);
     }
 
     static vectorXY_t previousVectorXY = {0, 0};
-    vectorXY_t vectorXY = irSensorCtrl.CaliculateVectorXYFromPulseWidth(pulseWidth); // 直交座標系のベクトル構造体
-    vectorRT_t vectorRT = irSensorCtrl.CaliculateVectorRTfromVectorXY(&vectorXY);    // 極座標系のベクトル構造体
+    const vectorXY_t vectorXY = vectorXYCalculator.calculate(pulseWidth); // 直交座標系のベクトル構造体
+    const vectorRT_t vectorRT = vectorRTCalculator.calculate(&vectorXY);  // 極座標系のベクトル構造体
     vectorXY_t deltaVectorXY = {(vectorXY.x - previousVectorXY.x) * 10, (vectorXY.y - previousVectorXY.y) * 10};
     previousVectorXY = vectorXY;
 
@@ -105,7 +109,7 @@ void printVectorRTIntBySerial(vectorRTInt_t vectorRT, vectorXYInt_t vectorXY)
 
 void printRawData()
 {
-    for (int i = 0; i < IRSensorCtrl::NumberOfBallSensors; i++)
+    for (int i = 0; i < IRSensorData::NumberOfBallSensors; i++)
     {
         Serial.print(pulseWidth[i]);
         Serial.print("    ");
