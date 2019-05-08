@@ -35,8 +35,8 @@ void loop()
     }
 
     static vectorXY_t previousVectorXY = {0, 0};
-    const vectorXY_t vectorXY = vectorXYCalculator.calculate(pulseWidth); // 直交座標系のベクトル構造体
-    const vectorRT_t vectorRT = vectorRTCalculator.calculate(&vectorXY);  // 極座標系のベクトル構造体
+    const vectorXY_t vectorXY = vectorXYCalculator.calculate(pulseWidth);
+    const vectorRT_t vectorRT = vectorRTCalculator.calculate(&vectorXY);
     vectorXY_t deltaVectorXY = {(vectorXY.x - previousVectorXY.x) * 10, (vectorXY.y - previousVectorXY.y) * 10};
     previousVectorXY = vectorXY;
 
