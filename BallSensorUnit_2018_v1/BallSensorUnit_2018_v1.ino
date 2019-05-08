@@ -4,6 +4,7 @@
 #include "PulseWidthReader.hpp"
 #include "VectorXYCalculator.hpp"
 #include "VectorRTCalculator.hpp"
+#include "PulseWidthLowPassFilter.hpp"
 
 constexpr unsigned long Baud = 115200;
 
@@ -11,7 +12,9 @@ PulseWidthReader<IRSensorData::NumberOfBallSensors, IRSensorData::BallSensorPins
 VectorXYCalculator<IRSensorData::NumberOfBallSensors, IRSensorData::UnitVectorX, IRSensorData::UnitVectorY> vectorXYCalculator;
 VectorRTCalculator vectorRTCalculator;
 
-float pulseWidth[IRSensorData::NumberOfBallSensors];
+PulseWidthLowPassFilter<IRSensorData::NumberOfBallSensors> pulseWidthLowPassFilter(0.05);
+
+float *pulseWidth;
 
 void setup()
 {
@@ -27,12 +30,7 @@ void loop()
 
     const float *currentPulseWidth = pulseWidthReader.read(); // IRセンサから読み出し
 
-    //フィルタリング
-    constexpr float Rate = 0.05;
-    for (int i = 0; i < IRSensorData::NumberOfBallSensors; i++)
-    {
-        pulseWidth[i] = currentPulseWidth[i] * Rate + pulseWidth[i] * (1 - Rate);
-    }
+    pulseWidth = pulseWidthLowPassFilter.calculate(currentPulseWidth);
 
     static vectorXY_t previousVectorXY = {0, 0};
     const vectorXY_t vectorXY = vectorXYCalculator.calculate(pulseWidth);
