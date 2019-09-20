@@ -10,7 +10,7 @@ class KDLineSensor
 {
   public:
     INLINE bool read() { return digitalReadFast(pin); }
-    INLINE int analogRead() { return analogRead(pin); }
+    INLINE int readAnalog() { return analogRead(pin); }
 };
 
 #endif

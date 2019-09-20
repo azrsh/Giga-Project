@@ -49,10 +49,10 @@ class KDLineSensors
         KDDebugUtility::printValueWithTag("analog", analogRead(analogPin));
         analogWrite(KDHardwere::LineThreshold, 256);
 
-        KDDebugUtility::printValueWithTag("Front", frontSensor->analogRead());
-        KDDebugUtility::printValueWithTag("Rear", rearSensor->analogRead());
-        KDDebugUtility::printValueWithTag("Right", rightSensor->analogRead());
-        KDDebugUtility::printValueWithTag("Left", leftSensor->analogRead());
+        KDDebugUtility::printValueWithTag("Front", frontSensor->readAnalog());
+        KDDebugUtility::printValueWithTag("Rear", rearSensor->readAnalog());
+        KDDebugUtility::printValueWithTag("Right", rightSensor->readAnalog());
+        KDDebugUtility::printValueWithTag("Left", leftSensor->readAnalog());
         KDDebugUtility::println();
     };
 };
