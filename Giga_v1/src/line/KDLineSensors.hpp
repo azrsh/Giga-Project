@@ -20,8 +20,8 @@ class KDLineSensors
   public:
     KDLineSensors(const FrontLineSensor *frontSensor, const RearLineSensor *rearSensor, const RightLineSensor *rightSensor, const LeftLineSensor *leftSensor, uint8_t analogPin, uint8_t thresholdPin)
         : frontSensor(frontSensor), rearSensor(rearSensor), rightSensor(rightSensor), leftSensor(leftSensor), analogPin(analogPin), thresholdPin(thresholdPin){};
-    INLINE bool checkFrontLineSensor() { return frontSensor->read(); }
-    INLINE bool checkRearLineSensor() { return rearSensor->read(); }
+    INLINE bool checkFrontLineSensor() { return false; /*frontSensor->read();*/ } //使えないのでoff
+    INLINE bool checkRearLineSensor() { return rearSensor->read(); }              //使えないのでoff
     INLINE bool checkRightLineSensor() { return rightSensor->read(); }
     INLINE bool checkLeftLineSensor() { return leftSensor->read(); }
     void setWhiteValue()
@@ -36,8 +36,8 @@ class KDLineSensors
     {
         int lineThreshold = round(greenValue * 0.7 + whiteValue * 0.3);
         //analogWrite(thresholdPin, lineThreshold);
-        analogWrite(thresholdPin, 85);
-        //analogWrite(thresholdPin, 400);
+        //analogWrite(thresholdPin, 85);
+        analogWrite(thresholdPin, 400);
     };
     void printValue()
     {
