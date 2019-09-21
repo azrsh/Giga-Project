@@ -36,7 +36,7 @@ KDUltraSonicSensor rightUSSensor(KDHardwere::RightUSSensorPin, 0.3);
 KDUltraSonicSensor leftUSSensor(KDHardwere::LeftUSSensorPin, 0.3);
 KDUltraSonicSensors usSensors = KDUltraSonicSensors(&frontUSSensor, &rearUSSensor, &rightUSSensor, &leftUSSensor);
 
-typedef KDLineSensor<KDHardwere::FrontLineSensorPin> FrontLineSensor;
+typedef KDLineSensor<KDHardwere::LineAnalogPin> FrontLineSensor; //FrontLineSensorPinが動かないのでanalogPin
 typedef KDLineSensor<KDHardwere::RearLineSensorPin> RearLineSensor;
 typedef KDLineSensor<KDHardwere::RightLineSensorPin> RightLineSensor;
 typedef KDLineSensor<KDHardwere::LeftLineSensorPin> LeftLineSensor;
@@ -104,8 +104,8 @@ void setup()
 
     digitalWriteFast(KDHardwere::LEDPin, HIGH);
 
-    analogWrite(KDHardwere::LineThreshold, 85);
-    //analogWrite(KDHardwere::LineThreshold, 400);
+    //analogWrite(KDHardwere::LineThreshold, 85);
+    analogWrite(KDHardwere::LineThreshold, 400);
 
     //ライン処理のためのタイマ割り込みを設定して開始
     FlexiTimer2::set(1, 1.0 / 7500, lineProcess1);
@@ -122,6 +122,7 @@ void loop()
     if (!mainSwitchObserver.read())
     {
         moveCtrl.moveByLocalDegreeAndPower(0, 0, 0);
+        Serial.println("switch off");
         delay(10);
         return;
     }
@@ -151,9 +152,9 @@ void loop()
     while (Serial5.available() > 0)
     {
         byte data = Serial5.read();
-        Serial.print("0x");
+        Serial.print("data : ");
         Serial.print(data, HEX);
-        Serial.print(" ");
+        Serial.println();
     }*/
     //gyroSensor.printValue();
 
